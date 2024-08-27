@@ -27,6 +27,7 @@ const props = defineProps<{
 
 .forecast-day {
   font-size: 24px;
+  font-weight: normal;
 }
 
 .forecast-temperature {

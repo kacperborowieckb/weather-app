@@ -1,16 +1,33 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="_ in 7"
-      :day="'WED'"
-      :weather-image="'https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png'"
-      :temperature="42"
+      v-for="forecast in props.forecastData"
+      :day="getDayPrefix(forecast.date)"
+      :weather-image="forecast.weather_icons[0]"
+      :temperature="forecast.temperature"
     />
   </section>
 </template>
 
 <script setup lang="ts">
+import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
+
+export type ForecastData = Record<string, WeatherData & { date: string }>;
+
+const props = defineProps<{ forecastData: ForecastData }>();
+
+const dayPrefixes: Record<number, string> = {
+  0: "MON",
+  1: "TUE",
+  2: "WED",
+  3: "THU",
+  4: "FRI",
+  5: "SAT",
+  6: "SUN",
+};
+
+const getDayPrefix = (time: string) => dayPrefixes[new Date(time).getDay()];
 </script>
 
 <style scoped>

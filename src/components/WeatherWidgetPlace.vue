@@ -1,9 +1,14 @@
 <template>
-  <h2 class="place">{{ props.city }}, {{ props.country }}</h2>
+  <h2 class="place">{{ props.name }}, {{ props.country }}</h2>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ city: string; country: string }>();
+export type Place = {
+  name: string;
+  country: string;
+};
+
+const props = defineProps<Place>();
 </script>
 
 <style scoped>

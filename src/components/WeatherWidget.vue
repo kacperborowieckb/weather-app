@@ -1,43 +1,120 @@
 <template>
   <div class="weather-widget">
-    <div v-if="error">
-      <p>Oops! {{ error.message }}</p>
-    </div>
-    <template v-else-if="data">
-      <WeatherWidgetPlace
-        :city="'New York'"
-        :country="'United States of America'"
-      />
-      <WeatherWidgetCurrentData
-        :temperature="40"
-        :weatherIcon="'https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'"
-        :weatherDescription="'Sunny weather'"
-        :windSpeed="122"
-        :pressure="1242"
-        :uvIndex="12"
-      />
-      <WeatherWidgetForecast />
-    </template>
-    <div v-else>Loading...</div>
+    <WeatherWidgetPlace
+      :name="'newYork'"
+      :country="'United States of America'"
+    />
+    <WeatherWidgetCurrentData
+      :temperature="mockResponseData.current.temperature"
+      :weather_icons="mockResponseData.current.weather_icons"
+      :weather_descriptions="mockResponseData.current.weather_descriptions"
+      :wind_speed="mockResponseData.current.wind_speed"
+      :pressure="mockResponseData.current.pressure"
+      :uv_index="mockResponseData.current.uv_index"
+    />
+    <WeatherWidgetForecast :forecastData="mockResponseData.forecast" />
   </div>
 </template>
 
 <script setup lang="ts">
-import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
-import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
-import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
-import { useFetch } from "../composables/useFetch";
+import WeatherWidgetPlace, { type Place } from "./WeatherWidgetPlace.vue";
+import WeatherWidgetCurrentData, {
+  type WeatherData,
+} from "./WeatherWidgetCurrentData.vue";
+import WeatherWidgetForecast, {
+  type ForecastData,
+} from "./WeatherWidgetForecast.vue";
 
-type MockReturnData = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
+type WeatherAPIResponseData = {
+  location: Place;
+  current: WeatherData;
+  forecast: ForecastData;
 };
 
-const baseUrl = "https://jsonplaceholder.typicode.com/todos/1";
-
-const { data, error } = useFetch<MockReturnData>(baseUrl);
+const mockResponseData: WeatherAPIResponseData = {
+  location: {
+    name: "New York",
+    country: "United States of America",
+  },
+  current: {
+    temperature: 18,
+    weather_icons: [
+      "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png",
+    ],
+    weather_descriptions: ["Sunny"],
+    wind_speed: 0,
+    pressure: 1011,
+    uv_index: 5,
+  },
+  forecast: {
+    "2019-07-07": {
+      date: "2019-07-07",
+      temperature: 21,
+      uv_index: 5,
+      wind_speed: 28,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Overcast"],
+    },
+    "2019-07-08": {
+      date: "2019-07-08",
+      temperature: 21,
+      uv_index: 5,
+      wind_speed: 28,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Overcast"],
+    },
+    "2019-07-09": {
+      date: "2019-07-09",
+      temperature: 73,
+      uv_index: 5,
+      wind_speed: 25,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Rainy"],
+    },
+    "2019-07-10": {
+      date: "2019-07-10",
+      temperature: 27,
+      uv_index: 5,
+      wind_speed: 25,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Cloudy"],
+    },
+    "2019-07-11": {
+      date: "2019-07-11",
+      temperature: 12,
+      uv_index: 8,
+      wind_speed: 122,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Rainy"],
+    },
+    "2019-07-12": {
+      date: "2019-07-12",
+      temperature: 153,
+      uv_index: 25,
+      wind_speed: 62,
+      pressure: 1011,
+      weather_icons: [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+      ],
+      weather_descriptions: ["Sunny"],
+    },
+  },
+};
 </script>
 
 <style scoped>
