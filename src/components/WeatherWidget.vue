@@ -1,18 +1,24 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetPlace
-      :city="'New York'"
-      :country="'United States of America'"
-    />
-    <WeatherWidgetCurrentData
-      :temperature="40"
-      :weatherIcon="'https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'"
-      :weatherDescription="'Sunny weather'"
-      :windSpeed="122"
-      :pressure="1242"
-      :uvIndex="12"
-    />
-    <WeatherWidgetForecast />
+    <div v-if="error">
+      <p>Oops! {{ error.message }}</p>
+    </div>
+    <template v-else-if="data">
+      <WeatherWidgetPlace
+        :city="'New York'"
+        :country="'United States of America'"
+      />
+      <WeatherWidgetCurrentData
+        :temperature="40"
+        :weatherIcon="'https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'"
+        :weatherDescription="'Sunny weather'"
+        :windSpeed="122"
+        :pressure="1242"
+        :uvIndex="12"
+      />
+      <WeatherWidgetForecast />
+    </template>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
@@ -20,6 +26,18 @@
 import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
+import { useFetch } from "../composables/useFetch";
+
+type MockReturnData = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
+const baseUrl = "https://jsonplaceholder.typicode.com/todos/1";
+
+const { data, error } = useFetch<MockReturnData>(baseUrl);
 </script>
 
 <style scoped>
