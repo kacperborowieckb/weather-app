@@ -42,6 +42,7 @@ const props = defineProps<WeatherData>();
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.75rem;
   display: flex;
 }
 
@@ -51,6 +52,7 @@ const props = defineProps<WeatherData>();
 
 .weather-description {
   font-weight: bold;
+  font-size: 24px;
 }
 
 .temperature-wrapper {
@@ -66,6 +68,11 @@ const props = defineProps<WeatherData>();
   justify-content: center;
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0 auto;
+  width: fit-content;
+  font-weight: bold;
+  font-size: 20px;
   list-style: none;
 }
 </style>

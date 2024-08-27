@@ -1,18 +1,22 @@
 <template>
   <div class="weather-widget">
     <WeatherWidgetPlace
-      :name="'newYork'"
-      :country="'United States of America'"
+      :name="mockResponseData.location.name"
+      :country="mockResponseData.location.country"
     />
     <WeatherWidgetCurrentData
-      :temperature="mockResponseData.current.temperature"
-      :weather_icons="mockResponseData.current.weather_icons"
-      :weather_descriptions="mockResponseData.current.weather_descriptions"
-      :wind_speed="mockResponseData.current.wind_speed"
-      :pressure="mockResponseData.current.pressure"
-      :uv_index="mockResponseData.current.uv_index"
+      :temperature="selectedDayData.temperature"
+      :weather_icons="selectedDayData.weather_icons"
+      :weather_descriptions="selectedDayData.weather_descriptions"
+      :wind_speed="selectedDayData.wind_speed"
+      :pressure="selectedDayData.pressure"
+      :uv_index="selectedDayData.uv_index"
     />
-    <WeatherWidgetForecast :forecastData="mockResponseData.forecast" />
+    <WeatherWidgetForecast
+      :forecastData="mockResponseData.forecast"
+      :selectedDay
+      @handleDayChange="handleDayChange"
+    />
   </div>
 </template>
 
@@ -24,11 +28,30 @@ import WeatherWidgetCurrentData, {
 import WeatherWidgetForecast, {
   type ForecastData,
 } from "./WeatherWidgetForecast.vue";
+import { computed, ref } from "vue";
 
 type WeatherAPIResponseData = {
   location: Place;
   current: WeatherData;
   forecast: ForecastData;
+};
+
+const selectedDay = ref<number | null>(null);
+
+const selectedDayData = computed(() => {
+  if (selectedDay.value === null) {
+    return mockResponseData.current;
+  }
+
+  return Object.values(mockResponseData.forecast)[selectedDay.value];
+});
+
+const handleDayChange = (newDay: number) => {
+  if (newDay === selectedDay.value) {
+    selectedDay.value = null;
+  } else {
+    selectedDay.value = newDay;
+  }
 };
 
 const mockResponseData: WeatherAPIResponseData = {

@@ -21,8 +21,18 @@ const props = defineProps<{
   gap: 1rem;
   flex-direction: column;
   display: flex;
-  padding: 0.75rem;
+  border-radius: 16px;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
   text-align: center;
+}
+
+.forecast-card.active {
+  background-color: hsl(203, 51%, 27%);
+}
+
+.forecast-card:hover {
+  background-color: hsl(203, 51%, 37%);
 }
 
 .forecast-day {

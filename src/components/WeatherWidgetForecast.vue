@@ -1,10 +1,12 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="forecast in props.forecastData"
+      v-for="(forecast, _, index) in props.forecastData"
       :day="getDayPrefix(forecast.date)"
       :weather-image="forecast.weather_icons[0]"
       :temperature="forecast.temperature"
+      :class="{ active: selectedDay === index }"
+      @click="emit('handleDayChange', index)"
     />
   </section>
 </template>
@@ -15,7 +17,12 @@ import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 
 export type ForecastData = Record<string, WeatherData & { date: string }>;
 
-const props = defineProps<{ forecastData: ForecastData }>();
+const props = defineProps<{
+  forecastData: ForecastData;
+  selectedDay: number | null;
+}>();
+
+const emit = defineEmits(["handleDayChange"]);
 
 const dayPrefixes: Record<number, string> = {
   0: "MON",
