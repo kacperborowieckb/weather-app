@@ -17,13 +17,6 @@ import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 
 export type ForecastData = Record<string, WeatherData & { date: string }>;
 
-const props = defineProps<{
-  forecastData: ForecastData;
-  selectedDay: number | null;
-}>();
-
-const emit = defineEmits(["handleDayChange"]);
-
 const dayPrefixes: Record<number, string> = {
   0: "MON",
   1: "TUE",
@@ -33,6 +26,13 @@ const dayPrefixes: Record<number, string> = {
   5: "SAT",
   6: "SUN",
 };
+
+const props = defineProps<{
+  forecastData: ForecastData;
+  selectedDay: number | null;
+}>();
+
+const emit = defineEmits(["handleDayChange"]);
 
 const getDayPrefix = (time: string) => dayPrefixes[new Date(time).getDay()];
 </script>

@@ -18,8 +18,8 @@ const props = defineProps<{
 
 <style scoped>
 .forecast-card {
-  gap: 1rem;
   flex-direction: column;
+  gap: 1rem;
   display: flex;
   border-radius: 16px;
   padding: 0.75rem 2rem;
