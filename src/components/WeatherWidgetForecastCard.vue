@@ -1,10 +1,10 @@
 <template>
   <div class="forecast-card">
-    <h4 class="forecast-day">{{ props.day }}</h4>
-    <div class="forecast-image">
+    <h4 class="forecast-card__day">{{ props.day }}</h4>
+    <div class="forecast-card__image">
       <img :src="props.weatherImage" :alt="`Weather Image for ${props.day}`" />
     </div>
-    <p class="forecast-temperature">{{ props.temperature }}&deg;C</p>
+    <p class="forecast-card__temperature">{{ props.temperature }}&deg;C</p>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ const props = defineProps<{
 }>();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .forecast-card {
   flex-direction: column;
   gap: 1rem;
@@ -25,23 +25,23 @@ const props = defineProps<{
   padding: 0.75rem 2rem;
   cursor: pointer;
   text-align: center;
-}
 
-.forecast-card.active {
-  background-color: hsl(203, 51%, 27%);
-}
+  &:hover {
+    background-color: hsl(203, 51%, 37%);
+  }
 
-.forecast-card:hover {
-  background-color: hsl(203, 51%, 37%);
-}
+  & .active {
+    background-color: hsl(203, 51%, 27%);
+  }
 
-.forecast-day {
-  font-size: 24px;
-  font-weight: normal;
-}
+  &__day {
+    font-size: 24px;
+    font-weight: normal;
+  }
 
-.forecast-temperature {
-  font-weight: bold;
-  font-size: 20px;
+  &__temperature {
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 </style>

@@ -11,7 +11,7 @@ export type Place = {
 const props = defineProps<Place>();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .place {
   text-align: center;
 }

@@ -37,14 +37,14 @@ const emit = defineEmits(["handleDayChange"]);
 const getDayPrefix = (time: string) => dayPrefixes[new Date(time).getDay()];
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .forecast {
   gap: 2rem;
   display: flex;
   margin: 0 2rem;
-}
 
-.forecast > * {
-  flex-basis: 100%;
+  & > * {
+    flex-basis: 100%;
+  }
 }
 </style>

@@ -140,7 +140,7 @@ const mockResponseData: WeatherAPIResponseData = {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .weather-widget {
   flex-direction: column;
   gap: 3rem;
