@@ -23,7 +23,9 @@ const props = defineProps<{
   selectedDay: number | null;
 }>();
 
-const emit = defineEmits(["handleDayChange"]);
+const emit = defineEmits<{
+  (e: "handleDayChange", index: number): void;
+}>();
 
 const getDayPrefix = (time: string) => weekDays[new Date(time).getDay()];
 </script>
