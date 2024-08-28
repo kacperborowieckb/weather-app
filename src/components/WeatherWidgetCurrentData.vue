@@ -16,20 +16,20 @@
       </h3>
     </div>
     <ul class="weather-info__additional-info">
-      <li class="weather-info__additional-info-item">
-        Wind: {{ props.windSpeed }}
-      </li>
-      <li class="weather-info__additional-info-item">
-        Pressure: {{ props.pressure }}
-      </li>
-      <li class="weather-info__additional-info-item">
-        UV Index: {{ props.uvIndex }}
+      <li
+        class="weather-info__additional-info-item"
+        v-for="(listItem, key) in sideListData"
+      >
+        {{ getListLabel(key) }}: {{ listItem }}
       </li>
     </ul>
   </section>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+import { splitOnUppercaseChars } from "../utils.ts/splitOnUppercaseChars";
+
 export type WeatherData = {
   temperature: number;
   weatherIcon: string;
@@ -41,6 +41,19 @@ export type WeatherData = {
 };
 
 const props = defineProps<WeatherData>();
+
+const sideListData = computed(() => {
+  const { weatherIcon, weatherDescription, temperature, date, ...listItems } =
+    props;
+
+  return listItems;
+});
+
+const getListLabel = (label: string): string => {
+  return splitOnUppercaseChars(label)
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+};
 </script>
 
 <style scoped lang="scss">
