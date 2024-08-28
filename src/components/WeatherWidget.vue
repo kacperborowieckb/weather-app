@@ -14,12 +14,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from "vue";
+
+import { mockWeatherResponseData } from "@/helpers/mockWeatherDataResponse";
+import { mapWeatherData } from "@/utils.ts/dataMappers";
+
 import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
-import { computed, ref } from "vue";
-import { mockWeatherResponseData } from "../helpers/mockWeatherDataResponse";
-import { mapWeatherData } from "../utils.ts/dataMappers";
 
 const selectedDay = ref<number | null>(null);
 

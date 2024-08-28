@@ -12,8 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { weekDays } from "@/helpers/weekDays";
+
 import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
-import { weekDays } from "../helpers/weekDays";
 import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
 
 export type ForecastData = (WeatherData & { date: string })[];
