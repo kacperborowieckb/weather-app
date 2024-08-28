@@ -1,43 +1,27 @@
-import {
-  ref,
-  watchEffect,
-  toValue,
-  ComputedRef,
-  type Ref,
-  type UnwrapRef,
-} from "vue";
+import { ref, type Ref } from "vue";
 
 type UseFetchReturnType<T> = {
-  data: Ref<UnwrapRef<T> | null>;
-  error: Ref<UnwrapRef<Error> | null>;
+  data: Ref<T | null>;
+  error: Ref<Error | null>;
 };
 
-export function useFetch<T>(
-  url: ComputedRef<string> | Ref<UnwrapRef<string>> | string
-): UseFetchReturnType<T> {
-  const data = ref<T | null>(null);
-  const error = ref<Error | null>(null);
+export async function useFetch<T>(url: string): Promise<UseFetchReturnType<T>> {
+  const data: Ref<T | null> = ref(null);
+  const error: Ref<Error | null> = ref(null);
 
-  watchEffect(async () => {
-    data.value = null;
-    error.value = null;
+  try {
+    const res = await fetch(url);
 
-    const urlValue = toValue(url);
-
-    try {
-      const res = await fetch(urlValue);
-
-      if (!res.ok) {
-        throw new Error(`Something went wrong ${res.status}`);
-      }
-
-      data.value = await res.json();
-    } catch (e) {
-      if (e instanceof Error) {
-        error.value = e;
-      }
+    if (!res.ok) {
+      throw new Error(`Something went wrong ${res.status}`);
     }
-  });
+
+    data.value = await res.json();
+  } catch (e) {
+    if (e instanceof Error) {
+      error.value = e;
+    }
+  }
 
   return { data, error };
 }
