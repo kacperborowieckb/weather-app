@@ -1,10 +1,10 @@
 <template>
   <section class="weather-info">
     <div class="weather-info__image-wrapper">
-      <img 
-        class="weather-info__image" 
-        :src="props.weatherIcon" 
-        :alt="`${props.weatherDescription} Weather Image`" 
+      <img
+        class="weather-info__image"
+        :src="props.weatherIcon"
+        :alt="`${props.weatherDescription} Weather Image`"
       />
       <p class="weather-info__description">
         {{ props.weatherDescription }}
@@ -16,8 +16,8 @@
       </h3>
     </div>
     <ul class="weather-info__additional-info">
-      <li 
-        class="weather-info__additional-info-item" 
+      <li
+        class="weather-info__additional-info-item"
         v-for="(listItem, key) in sideListData"
       >
         {{ getListLabel(key) }}: {{ listItem }}
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { splitOnUppercaseChars } from "@/utils/splitOnUppercaseChars";
+import { getListLabel } from "@/utils/getListLabel";
 
 export type WeatherData = {
   temperature: number;
@@ -48,12 +48,6 @@ const sideListData = computed(() => {
 
   return { windSpeed, pressure, uvIndex };
 });
-
-const getListLabel = (label: string) => {
-  return splitOnUppercaseChars(label)
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
-};
 </script>
 
 <style scoped lang="scss">
