@@ -2,24 +2,44 @@ import { type WeatherData } from "../components/WeatherWidgetCurrentData.vue";
 import { type ForecastData } from "../components/WeatherWidgetForecast.vue";
 import { type Place } from "../components/WeatherWidgetPlace.vue";
 
-export const mapWeatherData = (
-  data: any
-): {
+type WeatherDataResponse = {
+  weather_icons: string[];
+  weather_descriptions: string[];
+  wind_speed: number;
+  uv_index: number;
+  temperature: number;
+  pressure: number;
+};
+
+type WeatherDataMapperInput = {
+  location: Place;
+  current: WeatherDataResponse;
+  forecast: Record<string, WeatherDataResponse & { date: string }>;
+};
+
+type WeatherDataMapperOutput = {
   location: Place;
   current: WeatherData;
   forecast: ForecastData;
-} => {
+};
+
+export const mapWeatherData = (
+  data: WeatherDataMapperInput
+): WeatherDataMapperOutput => {
   const forecastMap: ForecastData = Object.keys(data.forecast).map(
-    (currentForecast) => ({
-      uvIndex: data.forecast[currentForecast].uv_index,
-      weatherDescription:
-        data.forecast[currentForecast].weather_descriptions[0],
-      weatherIcon: data.forecast[currentForecast].weather_icons[0],
-      windSpeed: data.forecast[currentForecast].wind_speed,
-      temperature: data.forecast[currentForecast].temperature,
-      pressure: data.forecast[currentForecast].pressure,
-      date: data.forecast[currentForecast].date,
-    })
+    (currentForecast) => {
+      const forecastData = data.forecast[currentForecast];
+
+      return {
+        uvIndex: forecastData.uv_index,
+        weatherDescription: forecastData.weather_descriptions[0],
+        weatherIcon: forecastData.weather_icons[0],
+        windSpeed: forecastData.wind_speed,
+        temperature: forecastData.temperature,
+        pressure: forecastData.pressure,
+        date: forecastData.date,
+      };
+    }
   );
 
   return {
