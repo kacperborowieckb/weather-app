@@ -1,49 +1,33 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetPlace
-      :name="mockResponseData.location.name"
-      :country="mockResponseData.location.country"
-    />
-    <WeatherWidgetCurrentData
-      :temperature="selectedDayData.temperature"
-      :weather_icons="selectedDayData.weather_icons"
-      :weather_descriptions="selectedDayData.weather_descriptions"
-      :wind_speed="selectedDayData.wind_speed"
-      :pressure="selectedDayData.pressure"
-      :uv_index="selectedDayData.uv_index"
-    />
+    <WeatherWidgetPlace :="weatherData.location" />
+    <WeatherWidgetCurrentData :="selectedDayData" />
     <WeatherWidgetForecast
-      :forecastData="mockResponseData.forecast"
-      :selectedDay
+      :forecastData="weatherData.forecast"
+      :selectedDay="selectedDay"
       @handleDayChange="handleDayChange"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import WeatherWidgetPlace, { type Place } from "./WeatherWidgetPlace.vue";
-import WeatherWidgetCurrentData, {
-  type WeatherData,
-} from "./WeatherWidgetCurrentData.vue";
-import WeatherWidgetForecast, {
-  type ForecastData,
-} from "./WeatherWidgetForecast.vue";
+import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
+import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
+import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 import { computed, ref } from "vue";
-
-type WeatherAPIResponseData = {
-  location: Place;
-  current: WeatherData;
-  forecast: ForecastData;
-};
+import { mockWeatherResponseData } from "../helpers/mockWeatherDataResponse";
+import { mapWeatherData } from "../utils.ts/dataMappers";
 
 const selectedDay = ref<number | null>(null);
 
+const weatherData = mapWeatherData(mockWeatherResponseData);
+
 const selectedDayData = computed(() => {
   if (selectedDay.value === null) {
-    return mockResponseData.current;
+    return weatherData.current;
   }
 
-  return Object.values(mockResponseData.forecast)[selectedDay.value];
+  return Object.values(weatherData.forecast)[selectedDay.value];
 });
 
 const handleDayChange = (newDay: number) => {
@@ -52,91 +36,6 @@ const handleDayChange = (newDay: number) => {
   } else {
     selectedDay.value = newDay;
   }
-};
-
-const mockResponseData: WeatherAPIResponseData = {
-  location: {
-    name: "New York",
-    country: "United States of America",
-  },
-  current: {
-    temperature: 18,
-    weather_icons: [
-      "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png",
-    ],
-    weather_descriptions: ["Sunny"],
-    wind_speed: 0,
-    pressure: 1011,
-    uv_index: 5,
-  },
-  forecast: {
-    "2019-07-07": {
-      date: "2019-07-07",
-      temperature: 21,
-      uv_index: 5,
-      wind_speed: 28,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Overcast"],
-    },
-    "2019-07-08": {
-      date: "2019-07-08",
-      temperature: 21,
-      uv_index: 5,
-      wind_speed: 28,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Overcast"],
-    },
-    "2019-07-09": {
-      date: "2019-07-09",
-      temperature: 73,
-      uv_index: 5,
-      wind_speed: 25,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Rainy"],
-    },
-    "2019-07-10": {
-      date: "2019-07-10",
-      temperature: 27,
-      uv_index: 5,
-      wind_speed: 25,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Cloudy"],
-    },
-    "2019-07-11": {
-      date: "2019-07-11",
-      temperature: 12,
-      uv_index: 8,
-      wind_speed: 122,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Rainy"],
-    },
-    "2019-07-12": {
-      date: "2019-07-12",
-      temperature: 153,
-      uv_index: 25,
-      wind_speed: 62,
-      pressure: 1011,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
-      ],
-      weather_descriptions: ["Sunny"],
-    },
-  },
 };
 </script>
 

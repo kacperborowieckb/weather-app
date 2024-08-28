@@ -30,7 +30,7 @@ const props = defineProps<{
     background-color: hsl(203, 51%, 37%);
   }
 
-  & .active {
+  &.active {
     background-color: hsl(203, 51%, 27%);
   }
 

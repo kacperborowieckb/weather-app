@@ -3,7 +3,7 @@
     <WeatherWidgetForecastCard
       v-for="(forecast, _, index) in props.forecastData"
       :day="getDayPrefix(forecast.date)"
-      :weather-image="forecast.weather_icons[0]"
+      :weather-image="forecast.weatherIcon"
       :temperature="forecast.temperature"
       :class="{ active: selectedDay === index }"
       @click="emit('handleDayChange', index)"
@@ -12,20 +12,11 @@
 </template>
 
 <script setup lang="ts">
+import { weekDays } from "../helpers/weekDays";
 import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 
 export type ForecastData = Record<string, WeatherData & { date: string }>;
-
-const dayPrefixes: Record<number, string> = {
-  0: "MON",
-  1: "TUE",
-  2: "WED",
-  3: "THU",
-  4: "FRI",
-  5: "SAT",
-  6: "SUN",
-};
 
 const props = defineProps<{
   forecastData: ForecastData;
@@ -34,7 +25,7 @@ const props = defineProps<{
 
 const emit = defineEmits(["handleDayChange"]);
 
-const getDayPrefix = (time: string) => dayPrefixes[new Date(time).getDay()];
+const getDayPrefix = (time: string) => weekDays[new Date(time).getDay()];
 </script>
 
 <style scoped lang="scss">

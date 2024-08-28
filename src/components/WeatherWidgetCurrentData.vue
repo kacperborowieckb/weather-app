@@ -3,11 +3,11 @@
     <div class="weather-info__image-wrapper">
       <img
         class="weather-info__image"
-        :src="props.weather_icons[0]"
-        :alt="`${props.weather_descriptions[0]} Weather Image`"
+        :src="props.weatherIcon"
+        :alt="`${props.weatherDescription} Weather Image`"
       />
       <p class="weather-info__description">
-        {{ props.weather_descriptions[0] }}
+        {{ props.weatherDescription }}
       </p>
     </div>
     <div class="weather-info__temperature-wrapper">
@@ -17,13 +17,13 @@
     </div>
     <ul class="weather-info__additional-info">
       <li class="weather-info__additional-info-item">
-        Wind: {{ props.wind_speed }}
+        Wind: {{ props.windSpeed }}
       </li>
       <li class="weather-info__additional-info-item">
         Pressure: {{ props.pressure }}
       </li>
       <li class="weather-info__additional-info-item">
-        UV Index: {{ props.uv_index }}
+        UV Index: {{ props.uvIndex }}
       </li>
     </ul>
   </section>
@@ -32,13 +32,12 @@
 <script setup lang="ts">
 export type WeatherData = {
   temperature: number;
-  weather_icons: string[];
-  weather_descriptions: string[];
-  wind_speed: number;
+  weatherIcon: string;
+  weatherDescription: string;
+  windSpeed: number;
   pressure: number;
-  uv_index: number;
+  uvIndex: number;
 };
-
 const props = defineProps<WeatherData>();
 </script>
 
