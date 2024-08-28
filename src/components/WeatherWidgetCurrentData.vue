@@ -1,7 +1,11 @@
 <template>
   <section class="weather-info">
     <div class="weather-info__image-wrapper">
-      <img class="weather-info__image" :src="props.weatherIcon" :alt="`${props.weatherDescription} Weather Image`" />
+      <img 
+        class="weather-info__image" 
+        :src="props.weatherIcon" 
+        :alt="`${props.weatherDescription} Weather Image`" 
+      />
       <p class="weather-info__description">
         {{ props.weatherDescription }}
       </p>
@@ -12,7 +16,10 @@
       </h3>
     </div>
     <ul class="weather-info__additional-info">
-      <li class="weather-info__additional-info-item" v-for="(listItem, key) in sideListData">
+      <li 
+        class="weather-info__additional-info-item" 
+        v-for="(listItem, key) in sideListData"
+      >
         {{ getListLabel(key) }}: {{ listItem }}
       </li>
     </ul>

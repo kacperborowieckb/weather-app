@@ -1,8 +1,13 @@
 <template>
   <section class="forecast">
-    <WeatherWidgetForecastCard v-for="forecast in props.forecastData" :day="getDayPrefix(forecast.date)"
-      :weather-image="forecast.weatherIcon" :temperature="forecast.temperature"
-      :class="{ active: selectedDay === forecast.date }" @click="emit('handleDayChange', forecast.date)" />
+    <WeatherWidgetForecastCard
+      v-for="forecast in props.forecastData"
+      :day="getDayPrefix(forecast.date)"
+      :weather-image="forecast.weatherIcon"
+      :temperature="forecast.temperature"
+      :class="{ active: selectedDay === forecast.date }"
+      @click="emit('handleDayChange', forecast.date)"
+    />
   </section>
 </template>
 
@@ -23,7 +28,8 @@ const emit = defineEmits<{
   (e: "handleDayChange", index: string): void;
 }>();
 
-const getDayPrefix = (time: string) => weekDays[new Date(time).getDay() as keyof typeof weekDays];
+const getDayPrefix = (time: string) =>
+  weekDays[new Date(time).getDay() as keyof typeof weekDays];
 </script>
 
 <style scoped lang="scss">
@@ -32,7 +38,7 @@ const getDayPrefix = (time: string) => weekDays[new Date(time).getDay() as keyof
   gap: $space-xs;
   margin: 0 $m-lg;
 
-  &>* {
+  & > * {
     flex-basis: 100%;
   }
 }
