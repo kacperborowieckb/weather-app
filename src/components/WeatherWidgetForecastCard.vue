@@ -18,9 +18,9 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .forecast-card {
+  display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  display: flex;
   border-radius: var(--radius-md);
   padding: var(--p-sm) var(--p-lg);
   cursor: pointer;

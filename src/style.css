@@ -61,8 +61,8 @@ body {
 }
 
 #app {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
 }
 
 html,

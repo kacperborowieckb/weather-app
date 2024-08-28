@@ -16,10 +16,10 @@ import WeatherWidget from "./components/WeatherWidget.vue";
 }
 
 .main {
-  flex: 1;
+  display: flex;
   justify-content: center;
   align-items: center;
-  display: flex;
+  flex: 1;
 }
 
 .footer {

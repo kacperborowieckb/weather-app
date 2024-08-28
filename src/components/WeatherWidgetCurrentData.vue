@@ -45,15 +45,15 @@ const props = defineProps<WeatherData>();
 
 <style scoped lang="scss">
 .weather-info {
-  grid-template-columns: repeat(3, 1fr);
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
   &__image-wrapper {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: var(--space-sm);
-    display: flex;
   }
 
   &__image {
@@ -74,10 +74,10 @@ const props = defineProps<WeatherData>();
   }
 
   &__additional-info {
-    justify-content: center;
-    gap: var(--space-xs);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xs);
     padding: 0;
     margin: 0 auto;
     width: fit-content;

@@ -44,9 +44,9 @@ const handleDayChange = (newDay: number) => {
 
 <style scoped lang="scss">
 .weather-widget {
+  display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  display: flex;
   border: var(--border-primary);
   border-radius: var(--radius-md);
   padding: var(--p-lg);
