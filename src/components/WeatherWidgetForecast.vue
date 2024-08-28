@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 import { weekDays } from "../helpers/weekDays";
 import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
-import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 
 export type ForecastData = Record<string, WeatherData & { date: string }>;
 
@@ -30,9 +30,9 @@ const getDayPrefix = (time: string) => weekDays[new Date(time).getDay()];
 
 <style scoped lang="scss">
 .forecast {
-  gap: 2rem;
+  gap: var(--space-xs);
   display: flex;
-  margin: 0 2rem;
+  margin: 0 var(--m-lg);
 
   & > * {
     flex-basis: 100%;

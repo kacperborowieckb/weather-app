@@ -37,7 +37,9 @@ export type WeatherData = {
   windSpeed: number;
   pressure: number;
   uvIndex: number;
+  date?: string;
 };
+
 const props = defineProps<WeatherData>();
 </script>
 
@@ -50,7 +52,7 @@ const props = defineProps<WeatherData>();
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-sm);
     display: flex;
   }
 
@@ -60,7 +62,7 @@ const props = defineProps<WeatherData>();
 
   &__description {
     font-weight: bold;
-    font-size: 24px;
+    font-size: var(--fs-lg);
   }
 
   &__temperature-wrapper {
@@ -69,18 +71,19 @@ const props = defineProps<WeatherData>();
   }
 
   &__temperature-info {
-    font-size: 64px;
+    font-size: var(--fs-3xl);
   }
 
   &__additional-info {
     justify-content: center;
+    gap: var(--space-xs);
     display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0 auto;
     width: fit-content;
     font-weight: bold;
-    font-size: 20px;
+    font-size: var(--fs-md);
     list-style: none;
   }
 }

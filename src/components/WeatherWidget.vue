@@ -1,6 +1,9 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetPlace :="weatherData.location" />
+    <WeatherWidgetPlace
+      :="weatherData.location"
+      :date="selectedDayData.date ?? 'Today'"
+    />
     <WeatherWidgetCurrentData :="selectedDayData" />
     <WeatherWidgetForecast
       :forecastData="weatherData.forecast"
@@ -19,7 +22,6 @@ import { mockWeatherResponseData } from "../helpers/mockWeatherDataResponse";
 import { mapWeatherData } from "../utils.ts/dataMappers";
 
 const selectedDay = ref<number | null>(null);
-
 const weatherData = mapWeatherData(mockWeatherResponseData);
 
 const selectedDayData = computed(() => {
@@ -42,12 +44,12 @@ const handleDayChange = (newDay: number) => {
 <style scoped lang="scss">
 .weather-widget {
   flex-direction: column;
-  gap: 3rem;
+  gap: var(--space-xl);
   display: flex;
-  border: 2px solid hsl(203, 51%, 37%);
-  border-radius: 16px;
-  padding: 2rem;
+  border: var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--p-lg);
   min-width: 768px;
-  background-color: rgb(22, 50, 67);
+  background-color: var(--clr-primary-dark);
 }
 </style>

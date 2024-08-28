@@ -1,90 +1,72 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --clr-text: hsl(0, 0%, 88%);
+  --clr-bg: hsl(0, 0%, 15%);
+  --clr-primary-very-light: hsl(203, 51%, 37%);
+  --clr-primary-light: hsl(203, 51%, 27%);
+  --clr-primary-dark: rgb(22, 50, 67);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --m-xs:8px ;
+  --m-sm: 16px;
+  --m-md: 24px;
+  --m-lg: 32px;
+  --m-xl: 48px;
+  --m-2xl: 64px;
+  
+  --p-xs:8px ;
+  --p-sm: 16px;
+  --p-md: 24px;
+  --p-lg: 32px;
+  --p-xl: 48px;
+  --p-2xl: 64px;
+  
+  --space-xs:8px ;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --fs-xs: 14px;
+  --fs-sm: 16px;
+  --fs-md: 20px;
+  --fs-lg: 24px;
+  --fs-xl: 36px;
+  --fs-2xl: 48px;
+  --fs-3xl: 64px;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+
+  --border-primary: 2px solid hsl(203, 51%, 37%);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
 }
-a:hover {
-  color: #535bf2;
+
+html {
+    overflow: auto;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card {
-  padding: 2em;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: "Inter", sans-serif;
+    color: var(--clr-text);
+    background-color: var(--clr-bg);
 }
 
 #app {
   flex-direction: column;
   display: flex;
-  margin: 0 auto;
-  width: 100%;
-  flex: 1;
-  padding: 1rem;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
-  margin: 0;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+html,
+body,
+#app {
+  height: 100%;
 }

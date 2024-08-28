@@ -19,29 +19,29 @@ const props = defineProps<{
 <style scoped lang="scss">
 .forecast-card {
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-sm);
   display: flex;
-  border-radius: 16px;
-  padding: 0.75rem 2rem;
+  border-radius: var(--radius-md);
+  padding: var(--p-sm) var(--p-lg);
   cursor: pointer;
   text-align: center;
 
   &:hover {
-    background-color: hsl(203, 51%, 37%);
+    background-color: var(--clr-primary-very-light);
   }
 
   &.active {
-    background-color: hsl(203, 51%, 27%);
+    background-color: var(--clr-primary-light);
   }
 
   &__day {
-    font-size: 24px;
+    font-size: var(--fs-lg);
     font-weight: normal;
   }
 
   &__temperature {
     font-weight: bold;
-    font-size: 20px;
+    font-size: var(--fs-md);
   }
 }
 </style>
