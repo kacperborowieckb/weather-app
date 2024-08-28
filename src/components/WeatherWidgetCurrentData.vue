@@ -1,11 +1,7 @@
 <template>
   <section class="weather-info">
     <div class="weather-info__image-wrapper">
-      <img
-        class="weather-info__image"
-        :src="props.weatherIcon"
-        :alt="`${props.weatherDescription} Weather Image`"
-      />
+      <img class="weather-info__image" :src="props.weatherIcon" :alt="`${props.weatherDescription} Weather Image`" />
       <p class="weather-info__description">
         {{ props.weatherDescription }}
       </p>
@@ -16,10 +12,7 @@
       </h3>
     </div>
     <ul class="weather-info__additional-info">
-      <li
-        class="weather-info__additional-info-item"
-        v-for="(listItem, key) in sideListData"
-      >
+      <li class="weather-info__additional-info-item" v-for="(listItem, key) in sideListData">
         {{ getListLabel(key) }}: {{ listItem }}
       </li>
     </ul>
@@ -44,13 +37,12 @@ export type WeatherData = {
 const props = defineProps<WeatherData>();
 
 const sideListData = computed(() => {
-  const { weatherIcon, weatherDescription, temperature, date, ...listItems } =
-    props;
+  const { windSpeed, pressure, uvIndex } = props;
 
-  return listItems;
+  return { windSpeed, pressure, uvIndex };
 });
 
-const getListLabel = (label: string): string => {
+const getListLabel = (label: string) => {
   return splitOnUppercaseChars(label)
     .map((word) => word[0].toUpperCase() + word.slice(1))
     .join(" ");

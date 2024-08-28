@@ -1,5 +1,7 @@
 <template>
-  <h2 class="place">{{ props.name }}, {{ props.country }}, {{ props.date }}</h2>
+  <h2 class="place">
+    {{ props.name }}, {{ props.country }}, {{ props.date }}
+  </h2>
 </template>
 
 <script setup lang="ts">
