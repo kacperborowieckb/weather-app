@@ -24,7 +24,9 @@ import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 
-const selectedDay = ref<string | null>(getCurrentDate());
+const currentDate = getCurrentDate();
+
+const selectedDay = ref<string>(currentDate);
 
 const weatherData = computed(() => mapWeatherData(mockWeatherResponseData));
 
@@ -38,7 +40,7 @@ const selectedDayData = computed(() => {
 
 const handleDayChange = (newDay: string) => {
   if (newDay === selectedDay.value) {
-    selectedDay.value = null;
+    selectedDay.value = currentDate;
   } else {
     selectedDay.value = newDay;
   }
