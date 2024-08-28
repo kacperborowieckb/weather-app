@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import { mockWeatherResponseData } from "@/helpers/mockWeatherDataResponse";
-import { mapWeatherData } from "@/utils.ts/dataMappers";
+import { mockWeatherResponseData } from "@/mocks/mockWeatherDataResponse";
+import { mapWeatherData } from "@/utils/dataMappers";
 
 import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";

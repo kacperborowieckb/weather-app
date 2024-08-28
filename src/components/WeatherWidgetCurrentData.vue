@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { splitOnUppercaseChars } from "@/utils.ts/splitOnUppercaseChars";
+import { splitOnUppercaseChars } from "@/utils/splitOnUppercaseChars";
 
 export type WeatherData = {
   temperature: number;
