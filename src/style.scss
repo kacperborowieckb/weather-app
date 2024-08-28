@@ -1,0 +1,30 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  overflow: auto;
+}
+
+body {
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+  color: $clr-text;
+  background-color: $clr-bg;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}

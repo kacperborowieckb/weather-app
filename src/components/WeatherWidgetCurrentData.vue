@@ -66,7 +66,7 @@ const getListLabel = (label: string): string => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: var(--space-sm);
+    gap: $space-sm;
   }
 
   &__image {
@@ -74,7 +74,7 @@ const getListLabel = (label: string): string => {
   }
 
   &__description {
-    font-size: var(--fs-lg);
+    font-size: $fs-lg;
   }
 
   &__temperature-wrapper {
@@ -83,18 +83,18 @@ const getListLabel = (label: string): string => {
   }
 
   &__temperature-info {
-    font-size: var(--fs-3xl);
+    font-size: $fs-3xl;
   }
 
   &__additional-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--space-xs);
+    gap: $space-xs;
     padding: 0;
     margin: 0 auto;
     width: fit-content;
-    font-size: var(--fs-md);
+    font-size: $fs-md;
     list-style: none;
   }
 }

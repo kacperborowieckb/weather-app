@@ -33,8 +33,8 @@ const getDayPrefix = (time: string) => weekDays[new Date(time).getDay()];
 <style scoped lang="scss">
 .forecast {
   display: flex;
-  gap: var(--space-xs);
-  margin: 0 var(--m-lg);
+  gap: $space-xs;
+  margin: 0 $m-lg;
 
   & > * {
     flex-basis: 100%;

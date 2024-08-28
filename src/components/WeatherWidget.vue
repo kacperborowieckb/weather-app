@@ -1,13 +1,13 @@
 <template>
   <div class="weather-widget">
     <WeatherWidgetPlace
-      :="weatherData.location"
+      v-bind="weatherData.location"
       :date="selectedDayData.date ?? 'Today'"
     />
-    <WeatherWidgetCurrentData :="selectedDayData" />
+    <WeatherWidgetCurrentData v-bind="selectedDayData" />
     <WeatherWidgetForecast
       :forecastData="weatherData.forecast"
-      :selectedDay="selectedDay"
+      :selectedDay
       @handleDayChange="handleDayChange"
     />
   </div>
@@ -46,11 +46,11 @@ const handleDayChange = (newDay: number) => {
 .weather-widget {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
-  border: var(--border-primary);
-  border-radius: var(--radius-md);
-  padding: var(--p-lg);
+  gap: $space-xl;
+  border: $border-primary;
+  border-radius: $radius-md;
+  padding: $p-lg;
   min-width: 768px;
-  background-color: var(--clr-primary-dark);
+  background-color: $clr-primary-dark;
 }
 </style>

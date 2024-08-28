@@ -20,27 +20,27 @@ const props = defineProps<{
 .forecast-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  border-radius: var(--radius-md);
-  padding: var(--p-sm) var(--p-lg);
+  gap: $space-sm;
+  border-radius: $radius-md;
+  padding: $p-sm $p-lg;
   cursor: pointer;
   text-align: center;
 
   &:hover {
-    background-color: var(--clr-primary-very-light);
+    background-color: $clr-primary-very-light;
   }
 
   &.active {
-    background-color: var(--clr-primary-light);
+    background-color: $clr-primary-light;
   }
 
   &__day {
-    font-size: var(--fs-lg);
+    font-size: $fs-lg;
     font-weight: 300;
   }
 
   &__temperature {
-    font-size: var(--fs-md);
+    font-size: $fs-md;
   }
 }
 </style>
