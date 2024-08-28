@@ -2,7 +2,7 @@
   <div class="weather-widget">
     <WeatherWidgetPlace
       v-bind="weatherData.location"
-      :date="selectedDayData.date ?? 'Today'"
+      :date="selectedDayData?.date ?? 'Today'"
     />
     <WeatherWidgetCurrentData v-bind="selectedDayData" />
     <WeatherWidgetForecast
@@ -18,24 +18,25 @@ import { computed, ref } from "vue";
 
 import { mockWeatherResponseData } from "@/mocks/mockWeatherDataResponse";
 import { mapWeatherData } from "@/utils/dataMappers";
+import { getCurrentDate } from "@/helpers/getCurrentDate";
 
 import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 
-const selectedDay = ref<number | null>(null);
+const selectedDay = ref<string | null>(getCurrentDate());
 
 const weatherData = computed(() => mapWeatherData(mockWeatherResponseData));
 
 const selectedDayData = computed(() => {
-  if (selectedDay.value === null) {
-    return weatherData.value.current;
-  }
+  const currentWeatherData = weatherData.value.forecast.find(
+    (currentForecast) => currentForecast.date === selectedDay.value
+  );
 
-  return weatherData.value.forecast[selectedDay.value];
+  return currentWeatherData || weatherData.value.current;
 });
 
-const handleDayChange = (newDay: number) => {
+const handleDayChange = (newDay: string) => {
   if (newDay === selectedDay.value) {
     selectedDay.value = null;
   } else {

@@ -17,7 +17,7 @@ type WeatherDataMapperInput = {
   forecast: Record<string, WeatherDataResponse & { date: string }>;
 };
 
-type WeatherDataMapperOutput = {
+export type WeatherDataMapperOutput = {
   location: Place;
   current: WeatherData;
   forecast: ForecastData;

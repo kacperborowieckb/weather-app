@@ -1,12 +1,12 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="(forecast, index) in props.forecastData"
+      v-for="forecast in props.forecastData"
       :day="getDayPrefix(forecast.date)"
       :weather-image="forecast.weatherIcon"
       :temperature="forecast.temperature"
-      :class="{ active: selectedDay === index }"
-      @click="emit('handleDayChange', index)"
+      :class="{ active: selectedDay === forecast.date }"
+      @click="emit('handleDayChange', forecast.date)"
     />
   </section>
 </template>
@@ -21,11 +21,11 @@ export type ForecastData = (WeatherData & { date: string })[];
 
 const props = defineProps<{
   forecastData: ForecastData;
-  selectedDay: number | null;
+  selectedDay: string | null;
 }>();
 
 const emit = defineEmits<{
-  (e: "handleDayChange", index: number): void;
+  (e: "handleDayChange", index: string): void;
 }>();
 
 const getDayPrefix = (time: string) => weekDays[new Date(time).getDay()];
