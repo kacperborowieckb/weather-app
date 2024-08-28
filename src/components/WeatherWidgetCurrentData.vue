@@ -61,7 +61,6 @@ const props = defineProps<WeatherData>();
   }
 
   &__description {
-    font-weight: bold;
     font-size: var(--fs-lg);
   }
 
@@ -82,7 +81,6 @@ const props = defineProps<WeatherData>();
     padding: 0;
     margin: 0 auto;
     width: fit-content;
-    font-weight: bold;
     font-size: var(--fs-md);
     list-style: none;
   }

@@ -36,11 +36,10 @@ const props = defineProps<{
 
   &__day {
     font-size: var(--fs-lg);
-    font-weight: normal;
+    font-weight: 300;
   }
 
   &__temperature {
-    font-weight: bold;
     font-size: var(--fs-md);
   }
 }
