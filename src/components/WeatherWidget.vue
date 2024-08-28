@@ -22,14 +22,15 @@ import { mockWeatherResponseData } from "../helpers/mockWeatherDataResponse";
 import { mapWeatherData } from "../utils.ts/dataMappers";
 
 const selectedDay = ref<number | null>(null);
-const weatherData = mapWeatherData(mockWeatherResponseData);
+
+const weatherData = computed(() => mapWeatherData(mockWeatherResponseData));
 
 const selectedDayData = computed(() => {
   if (selectedDay.value === null) {
-    return weatherData.current;
+    return weatherData.value.current;
   }
 
-  return Object.values(weatherData.forecast)[selectedDay.value];
+  return weatherData.value.forecast[selectedDay.value];
 });
 
 const handleDayChange = (newDay: number) => {

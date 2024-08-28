@@ -1,7 +1,7 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="(forecast, _, index) in props.forecastData"
+      v-for="(forecast, index) in props.forecastData"
       :day="getDayPrefix(forecast.date)"
       :weather-image="forecast.weatherIcon"
       :temperature="forecast.temperature"
@@ -16,7 +16,7 @@ import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
 import { weekDays } from "../helpers/weekDays";
 import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
 
-export type ForecastData = Record<string, WeatherData & { date: string }>;
+export type ForecastData = (WeatherData & { date: string })[];
 
 const props = defineProps<{
   forecastData: ForecastData;

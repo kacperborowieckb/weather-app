@@ -10,7 +10,7 @@
 import WeatherWidget from "./components/WeatherWidget.vue";
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   height: 72px;
 }

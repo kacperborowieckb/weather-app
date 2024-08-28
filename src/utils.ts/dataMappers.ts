@@ -9,10 +9,8 @@ export const mapWeatherData = (
   current: WeatherData;
   forecast: ForecastData;
 } => {
-  const forecastMap: ForecastData = {};
-
-  Object.keys(data.forecast).map((currentForecast) => {
-    forecastMap[currentForecast] = {
+  const forecastMap: ForecastData = Object.keys(data.forecast).map(
+    (currentForecast) => ({
       uvIndex: data.forecast[currentForecast].uv_index,
       weatherDescription:
         data.forecast[currentForecast].weather_descriptions[0],
@@ -21,8 +19,8 @@ export const mapWeatherData = (
       temperature: data.forecast[currentForecast].temperature,
       pressure: data.forecast[currentForecast].pressure,
       date: data.forecast[currentForecast].date,
-    };
-  });
+    })
+  );
 
   return {
     location: data.location,
