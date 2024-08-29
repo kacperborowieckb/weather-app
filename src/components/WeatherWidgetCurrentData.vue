@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { getListLabel } from "@/utils/getListLabel";
+import { getListLabel } from "@/utils/strings";
 
 export type WeatherData = {
   temperature: number;

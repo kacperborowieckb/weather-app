@@ -11,7 +11,7 @@ type WeatherDataResponse = {
   pressure: number;
 };
 
-type WeatherDataMapperInput = {
+export type WeatherDataMapperInput = {
   location: Place;
   current: WeatherDataResponse;
   forecast: Record<string, WeatherDataResponse & { date: string }>;

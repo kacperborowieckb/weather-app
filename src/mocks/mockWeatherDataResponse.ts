@@ -1,4 +1,6 @@
-export const mockWeatherResponseData: any = {
+import { WeatherDataMapperInput } from "@/utils/dataMappers";
+
+export const mockWeatherResponseData: WeatherDataMapperInput = {
   location: {
     name: "New York",
     country: "United States of America",

@@ -1,4 +1,5 @@
-import { splitOnUppercaseChars } from "./splitOnUppercaseChars";
+export const splitOnUppercaseChars = (word: string): string[] =>
+  word.split(/(?=[A-Z])/) ?? [];
 
 export const getListLabel = (label: string) => {
   return splitOnUppercaseChars(label)
