@@ -1,6 +1,6 @@
-import { type WeatherData } from "../components/WeatherWidgetCurrentData.vue";
-import { type ForecastData } from "../components/WeatherWidgetForecast.vue";
-import { type Place } from "../components/WeatherWidgetPlace.vue";
+import { WeatherData } from "@/components/WeatherWidgetCurrentData.vue";
+import { ForecastData } from "@/components/WeatherWidgetForecast.vue";
+import { Place } from "@/components/WeatherWidgetPlace.vue";
 
 type WeatherDataResponse = {
   weather_icons: string[];
