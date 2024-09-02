@@ -32,6 +32,7 @@ import { computed } from "vue";
 import { getListLabel } from "@/utils/strings";
 import { type ForecastItem } from "@/utils/dataMappers";
 import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
+import { getAverage } from "@/helpers/getAverage";
 
 const props = defineProps<ForecastItem>();
 
@@ -41,11 +42,9 @@ const sideListData = computed(() => ({
   source: props.sources[0],
 }));
 
-const averageTemperature = computed(() => {
-  return (
-    (sideListData.value.maxTemperature + sideListData.value.minTemperature) / 2
-  );
-});
+const averageTemperature = computed(() =>
+  getAverage(props.temperature.minimum.value, props.temperature.maximum.value)
+);
 
 const imageLink = computed(() => getWeatherImageLink(props.day.icon));
 </script>
