@@ -2,13 +2,13 @@
   <div class="weather-widget">
     <WeatherWidgetMessage v-if="geoLocationError" :message="geoLocationError" />
     <template v-else>
-      <WeatherWidgetPlace
+      <!-- <WeatherWidgetPlace
         v-bind="weatherData.location"
         :date="selectedDayData?.date ?? 'Today'"
-      />
+      /> -->
       <WeatherWidgetCurrentData v-bind="selectedDayData" />
       <WeatherWidgetForecast
-        :forecastData="weatherData.forecast"
+        :forecastData="weatherData.dailyForecasts.slice(1)"
         :selectedDay
         @handleDayChange="handleDayChange"
       />
@@ -21,15 +21,15 @@ import { computed, ref, onMounted } from "vue";
 
 import { mockWeatherResponseData } from "@/mocks/mockWeatherDataResponse";
 import { mapWeatherData } from "@/utils/dataMappers";
-import { getCurrentDate } from "@/helpers/getCurrentDate";
 import { Coordinates, getLocation } from "@/helpers/getLocation";
+import { getFormattedDate } from "@/helpers/getFormattedDate";
 
 import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 import WeatherWidgetMessage from "./WeatherWidgetMessage.vue";
 
-const currentDate = getCurrentDate();
+const currentDate = getFormattedDate();
 
 const selectedDay = ref<string>(currentDate);
 const coords = ref<Coordinates | null>(null);
@@ -38,11 +38,11 @@ const geoLocationError = ref<string | null>(null);
 const weatherData = computed(() => mapWeatherData(mockWeatherResponseData));
 
 const selectedDayData = computed(() => {
-  const currentWeatherData = weatherData.value.forecast.find(
+  const currentWeatherData = weatherData.value.dailyForecasts.find(
     (currentForecast) => currentForecast.date === selectedDay.value
   );
 
-  return currentWeatherData || weatherData.value.current;
+  return currentWeatherData || weatherData.value.dailyForecasts[0];
 });
 
 const handleDayChange = (newDay: string) => {
@@ -56,6 +56,7 @@ const handleDayChange = (newDay: string) => {
 onMounted(async () => {
   try {
     coords.value = await getLocation();
+    console.log(coords.value.latitude, coords.value.longitude);
   } catch (err) {
     geoLocationError.value = err as string;
   }

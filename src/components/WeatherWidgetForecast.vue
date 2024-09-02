@@ -3,8 +3,8 @@
     <WeatherWidgetForecastCard
       v-for="forecast in props.forecastData"
       :day="getDayPrefix(forecast.date)"
-      :weatherImage="forecast.weatherIcon"
-      :temperature="forecast.temperature"
+      :weatherImage="getWeatherImageLink(forecast.day.icon)"
+      :temperature="forecast.temperature.maximum.value"
       :class="{ active: selectedDay === forecast.date }"
       @click="emit('handleDayChange', forecast.date)"
     />
@@ -13,11 +13,12 @@
 
 <script setup lang="ts">
 import { getDayPrefix } from "@/helpers/getDayPrefix";
+import { type ForecastItem } from "@/utils/dataMappers";
 
 import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
-import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
+import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
 
-export type ForecastData = (WeatherData & { date: string })[];
+export type ForecastData = ForecastItem[];
 
 const props = defineProps<{
   forecastData: ForecastData;
