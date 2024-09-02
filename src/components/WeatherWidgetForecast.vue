@@ -4,12 +4,7 @@
       v-for="forecast in props.forecastData"
       :day="getDayPrefix(forecast.date)"
       :weatherImage="getWeatherImageLink(forecast.day.icon)"
-      :temperature="
-        getAverage(
-          forecast.temperature.maximum.value,
-          forecast.temperature.minimum.value
-        )
-      "
+      :temperature="forecast.temperature.average"
       :class="{ active: selectedDay === forecast.date }"
       @click="emit('handleDayChange', forecast.date)"
     />
@@ -19,7 +14,6 @@
 <script setup lang="ts">
 import { getDayPrefix } from "@/helpers/getDayPrefix";
 import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
-import { getAverage } from "@/helpers/getAverage";
 import { type ForecastItem } from "@/utils/dataMappers";
 
 import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";

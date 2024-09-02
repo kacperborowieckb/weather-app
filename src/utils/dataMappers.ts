@@ -14,7 +14,12 @@ export type WeatherDataMapperInput = {
 
 export type ForecastItem = {
   date: string;
-  temperature: Record<"minimum" | "maximum", { value: number; unit: string }>;
+  temperature: {
+    minimum: number;
+    maximum: number;
+    average: number;
+    unit: string;
+  };
   day: {
     icon: number;
     iconPhrase: string;
@@ -36,14 +41,10 @@ export const mapWeatherData = (
       return {
         date: getFormattedDate(currentForecast.Date),
         temperature: {
-          minimum: {
-            value: temperature.Minimum.Value,
-            unit: temperature.Maximum.Unit,
-          },
-          maximum: {
-            value: temperature.Maximum.Value,
-            unit: temperature.Maximum.Unit,
-          },
+          minimum: temperature.Minimum.Value,
+          maximum: temperature.Maximum.Value,
+          average: (temperature.Minimum.Value + temperature.Maximum.Value) / 2,
+          unit: temperature.Minimum.Unit,
         },
         day: {
           icon: currentForecast.Day.Icon,

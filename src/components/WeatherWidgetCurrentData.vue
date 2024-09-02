@@ -12,7 +12,7 @@
     </div>
     <div class="weather-info__temperature-wrapper">
       <h3 class="weather-info__temperature-info">
-        {{ averageTemperature }}&deg;{{ props.temperature.minimum.unit }}
+        {{ props.temperature.average }}&deg;{{ props.temperature.unit }}
       </h3>
     </div>
     <ul class="weather-info__additional-info">
@@ -32,19 +32,14 @@ import { computed } from "vue";
 import { getListLabel } from "@/utils/strings";
 import { type ForecastItem } from "@/utils/dataMappers";
 import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
-import { getAverage } from "@/helpers/getAverage";
 
 const props = defineProps<ForecastItem>();
 
 const sideListData = computed(() => ({
-  minTemperature: props.temperature.minimum.value,
-  maxTemperature: props.temperature.maximum.value,
+  minTemperature: props.temperature.minimum,
+  maxTemperature: props.temperature.maximum,
   source: props.sources[0],
 }));
-
-const averageTemperature = computed(() =>
-  getAverage(props.temperature.minimum.value, props.temperature.maximum.value)
-);
 
 const imageLink = computed(() => getWeatherImageLink(props.day.icon));
 </script>
