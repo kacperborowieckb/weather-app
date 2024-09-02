@@ -5,7 +5,10 @@ import axios, {
 } from "axios";
 import { ref, type Ref } from "vue";
 
-type FetchData = (method: Method, payload?: any) => void;
+type FetchData = (
+  method?: Method,
+  config?: AxiosRequestConfig
+) => Promise<void>;
 
 type UseFetchReturnType<T> = {
   data: Ref<T | null>;
@@ -14,15 +17,15 @@ type UseFetchReturnType<T> = {
   fetchData: FetchData;
 };
 
-export function useFetch<T>(url: string): UseFetchReturnType<T> {
+export function useFetch<T>(
+  url: string,
+  mapper?: (data: any) => T
+): UseFetchReturnType<T> {
   const data: Ref<T | null> = ref(null);
   const error: Ref<Error | null> = ref(null);
   const isLoading: Ref<boolean> = ref(false);
 
-  const fetchData: FetchData = async (
-    method = "GET",
-    config?: AxiosRequestConfig
-  ) => {
+  const fetchData: FetchData = async (method = "GET", config) => {
     error.value = null;
     isLoading.value = true;
 
@@ -31,10 +34,10 @@ export function useFetch<T>(url: string): UseFetchReturnType<T> {
         url,
         method,
         ...config,
+        params: { apikey: import.meta.env.VITE_API_KEY, ...config?.params },
       });
 
-      data.value = res.data;
-      console.log(res.data);
+      data.value = mapper ? mapper(res.data) : res.data;
     } catch (e) {
       if (e instanceof Error) {
         error.value = e;

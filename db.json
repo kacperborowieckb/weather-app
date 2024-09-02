@@ -73,7 +73,7 @@
             "Radar"
         ]
     },
-    "forecast": {
+    "forecast":  {
         "Headline": {
             "EffectiveDate": "2024-09-02T08:00:00+02:00",
             "EffectiveEpochDate": 1725256800,

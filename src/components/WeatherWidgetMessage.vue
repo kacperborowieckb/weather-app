@@ -1,16 +1,24 @@
 <template>
   <div class="wrapper">
-    <p>{{ props.message }}</p>
+    <p v-for="message in messages">{{ message }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ message: string }>();
+import { computed } from "vue";
+
+const props = defineProps<{ message?: string | (string | Error)[] }>();
+
+const messages = computed(() =>
+  Array.isArray(props.message) ? props.message : [props.message]
+);
 </script>
 
 <style lang="scss">
 .wrapper {
   display: flex;
+  flex-direction: column;
+  gap: $space-sm;
   justify-content: center;
   align-items: center;
   aspect-ratio: 2.5/1;

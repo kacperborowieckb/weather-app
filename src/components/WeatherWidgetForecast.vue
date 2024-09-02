@@ -5,6 +5,7 @@
       :day="getDayPrefix(forecast.date)"
       :weatherImage="getWeatherImageLink(forecast.day.icon)"
       :temperature="forecast.temperature.average"
+      :temperatureUnit="forecast.temperature.unit"
       :class="{ active: selectedDay === forecast.date }"
       @click="emit('handleDayChange', forecast.date)"
     />
