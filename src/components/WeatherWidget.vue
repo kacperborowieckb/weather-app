@@ -29,6 +29,7 @@ import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 import WeatherWidgetMessage from "./WeatherWidgetMessage.vue";
+import { endpoints } from "@/constants";
 
 const currentDate = getFormattedDate();
 
