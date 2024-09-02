@@ -20,6 +20,7 @@
 import { computed, ref, onMounted } from "vue";
 
 import { mockWeatherResponseData } from "@/mocks/mockWeatherDataResponse";
+import { mockLocationKeyResponseData } from "@/mocks/mockLocationKeyResponse";
 import { mapLocationKeyData, mapWeatherData } from "@/utils/dataMappers";
 import { Coordinates, getLocation } from "@/helpers/getLocation";
 import { getFormattedDate } from "@/helpers/getFormattedDate";
@@ -28,7 +29,6 @@ import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 import WeatherWidgetMessage from "./WeatherWidgetMessage.vue";
-import { mockLocationKeyResponseData } from "@/mocks/mockLocationKeyResponse";
 
 const currentDate = getFormattedDate();
 
