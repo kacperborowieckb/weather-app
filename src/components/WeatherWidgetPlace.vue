@@ -1,10 +1,12 @@
 <template>
-  <h2 class="place">{{ props.name }}, {{ props.country }}, {{ props.date }}</h2>
+  <h2 class="place">
+    {{ props.localizedName }}, {{ props.country }}, {{ props.date }}
+  </h2>
 </template>
 
 <script setup lang="ts">
 export type Place = {
-  name: string;
+  localizedName: string;
   country: string;
   date?: string;
 };

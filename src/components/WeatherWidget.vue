@@ -2,10 +2,10 @@
   <div class="weather-widget">
     <WeatherWidgetMessage v-if="geoLocationError" :message="geoLocationError" />
     <template v-else>
-      <!-- <WeatherWidgetPlace
-        v-bind="weatherData.location"
-        :date="selectedDayData?.date ?? 'Today'"
-      /> -->
+      <WeatherWidgetPlace
+        v-bind="locationKeyData"
+        :date="selectedDayData.date"
+      />
       <WeatherWidgetCurrentData v-bind="selectedDayData" />
       <WeatherWidgetForecast
         :forecastData="weatherData.dailyForecasts.slice(1)"
@@ -20,7 +20,7 @@
 import { computed, ref, onMounted } from "vue";
 
 import { mockWeatherResponseData } from "@/mocks/mockWeatherDataResponse";
-import { mapWeatherData } from "@/utils/dataMappers";
+import { mapLocationKeyData, mapWeatherData } from "@/utils/dataMappers";
 import { Coordinates, getLocation } from "@/helpers/getLocation";
 import { getFormattedDate } from "@/helpers/getFormattedDate";
 
@@ -28,6 +28,7 @@ import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
 import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
 import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
 import WeatherWidgetMessage from "./WeatherWidgetMessage.vue";
+import { mockLocationKeyResponseData } from "@/mocks/mockLocationKeyResponse";
 
 const currentDate = getFormattedDate();
 
@@ -36,6 +37,9 @@ const coords = ref<Coordinates | null>(null);
 const geoLocationError = ref<string | null>(null);
 
 const weatherData = computed(() => mapWeatherData(mockWeatherResponseData));
+const locationKeyData = computed(() =>
+  mapLocationKeyData(mockLocationKeyResponseData)
+);
 
 const selectedDayData = computed(() => {
   const currentWeatherData = weatherData.value.dailyForecasts.find(
