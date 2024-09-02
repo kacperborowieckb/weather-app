@@ -8,12 +8,10 @@ export const mockWeatherResponseData: WeatherDataMapperInput = {
         Minimum: {
           Value: 58,
           Unit: "F",
-          UnitType: 18,
         },
         Maximum: {
           Value: 84,
           Unit: "F",
-          UnitType: 18,
         },
       },
       Day: {
@@ -28,12 +26,10 @@ export const mockWeatherResponseData: WeatherDataMapperInput = {
         Minimum: {
           Value: 59,
           Unit: "F",
-          UnitType: 18,
         },
         Maximum: {
           Value: 88,
           Unit: "F",
-          UnitType: 18,
         },
       },
       Day: {
@@ -48,12 +44,10 @@ export const mockWeatherResponseData: WeatherDataMapperInput = {
         Minimum: {
           Value: 58,
           Unit: "F",
-          UnitType: 18,
         },
         Maximum: {
           Value: 86,
           Unit: "F",
-          UnitType: 18,
         },
       },
       Day: {
@@ -68,12 +62,10 @@ export const mockWeatherResponseData: WeatherDataMapperInput = {
         Minimum: {
           Value: 56,
           Unit: "F",
-          UnitType: 18,
         },
         Maximum: {
           Value: 84,
           Unit: "F",
-          UnitType: 18,
         },
       },
       Day: {
@@ -88,12 +80,10 @@ export const mockWeatherResponseData: WeatherDataMapperInput = {
         Minimum: {
           Value: 58,
           Unit: "F",
-          UnitType: 18,
         },
         Maximum: {
           Value: 82,
           Unit: "F",
-          UnitType: 18,
         },
       },
       Day: {

@@ -56,3 +56,25 @@ export const mapWeatherData = (
 
   return { dailyForecasts: dailyForecastsMap };
 };
+
+type LocationKeyMapperInput = {
+  Key: string;
+  LocalizedName: string;
+  Country: {
+    LocalizedName: string;
+  };
+};
+
+type LocationKeyMapperOutput = {
+  key: string;
+  localizedName: string;
+  country: string;
+};
+
+export const mapLocationKeyData = (
+  data: LocationKeyMapperInput
+): LocationKeyMapperOutput => ({
+  key: data.Key,
+  localizedName: data.LocalizedName,
+  country: data.Country.LocalizedName,
+});
