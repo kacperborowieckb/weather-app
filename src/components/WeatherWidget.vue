@@ -20,6 +20,7 @@
         @handleDayChange="handleDayChange"
       />
     </template>
+    <div v-else>Something bad happened. Please refresh the page</div>
   </div>
 </template>
 
