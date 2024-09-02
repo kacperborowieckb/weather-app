@@ -30,8 +30,8 @@
 import { computed } from "vue";
 
 import { getListLabel } from "@/utils/strings";
-import { type ForecastItem } from "@/utils/dataMappers";
 import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
+import { type ForecastItem } from "@/utils/dataMappers";
 
 const props = defineProps<ForecastItem>();
 
