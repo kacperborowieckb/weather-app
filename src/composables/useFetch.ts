@@ -14,15 +14,15 @@ type UseFetchReturnType<T> = {
   fetchData: FetchData;
 };
 
-export function useFetch<T>(
-  url: string,
-  config?: AxiosRequestConfig
-): UseFetchReturnType<T> {
+export function useFetch<T>(url: string): UseFetchReturnType<T> {
   const data: Ref<T | null> = ref(null);
   const error: Ref<Error | null> = ref(null);
   const isLoading: Ref<boolean> = ref(false);
 
-  const fetchData: FetchData = async (method = "GET", payload) => {
+  const fetchData: FetchData = async (
+    method = "GET",
+    config?: AxiosRequestConfig
+  ) => {
     error.value = null;
     isLoading.value = true;
 
@@ -30,11 +30,11 @@ export function useFetch<T>(
       const res: AxiosResponse<T> = await axios.request({
         url,
         method,
-        data: payload,
         ...config,
       });
 
       data.value = res.data;
+      console.log(res.data);
     } catch (e) {
       if (e instanceof Error) {
         error.value = e;
