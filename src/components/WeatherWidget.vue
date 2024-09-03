@@ -33,7 +33,7 @@ import {
   mapLocationKeyData,
   mapWeatherData,
 } from "@/utils/dataMappers";
-import { Coordinates, getLocation } from "@/helpers/getLocation";
+import { type Coordinates, getLocation } from "@/helpers/getLocation";
 import { getFormattedDate } from "@/helpers/getFormattedDate";
 import { useFetch } from "@/composables/useFetch";
 import { API_URL, endpoints } from "@/constants";

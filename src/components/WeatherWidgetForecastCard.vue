@@ -2,7 +2,10 @@
   <div class="forecast-card">
     <h4 class="forecast-card__day">{{ props.day }}</h4>
     <div class="forecast-card__image">
-      <img :src="props.weatherImage" :alt="`Weather Image for ${props.day}`" />
+      <img 
+        :src="props.weatherImage" 
+        :alt="`Weather Image for ${props.day}`" 
+      />
     </div>
     <p class="forecast-card__temperature">
       {{ props.temperature }}&deg;{{ props.temperatureUnit }}

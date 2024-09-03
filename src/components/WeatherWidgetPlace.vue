@@ -8,7 +8,7 @@
 export type Place = {
   localizedName: string;
   country: string;
-  date?: string;
+  date: string;
 };
 
 const props = defineProps<Place>();
