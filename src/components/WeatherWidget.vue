@@ -27,7 +27,12 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from "vue";
 
-import { mapLocationKeyData, mapWeatherData } from "@/utils/dataMappers";
+import {
+  type LocationKeyMapperOutput,
+  type WeatherDataMapperOutput,
+  mapLocationKeyData,
+  mapWeatherData,
+} from "@/utils/dataMappers";
 import { Coordinates, getLocation } from "@/helpers/getLocation";
 import { getFormattedDate } from "@/helpers/getFormattedDate";
 import { useFetch } from "@/composables/useFetch";
@@ -50,14 +55,17 @@ const {
   error: locationKeyError,
   isLoading: isLoadingLocationKey,
   fetchData: fetchLocationKey,
-} = useFetch(`${API_URL}${endpoints.locationKey}`, mapLocationKeyData);
+} = useFetch<LocationKeyMapperOutput>(
+  `${API_URL}${endpoints.locationKey}`,
+  mapLocationKeyData
+);
 
 const {
   data: weatherData,
   error: weatherError,
   isLoading: isLoadingWeatherData,
   fetchData: fetchWeatherData,
-} = useFetch("", mapWeatherData);
+} = useFetch<WeatherDataMapperOutput>("", mapWeatherData);
 
 const globalError = computed(() => {
   return [geoLocationError, locationKeyError, weatherError]

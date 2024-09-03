@@ -66,7 +66,7 @@ type LocationKeyMapperInput = {
   };
 };
 
-type LocationKeyMapperOutput = {
+export type LocationKeyMapperOutput = {
   key: string;
   localizedName: string;
   country: string;
