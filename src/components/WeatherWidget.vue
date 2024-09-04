@@ -47,7 +47,7 @@ const currentDate = getFormattedDate();
 
 const selectedDay = ref<string>(currentDate);
 const coords = ref<Coordinates | null>(null);
-const geoLocationLoading = ref<boolean>(false);
+const isLoadingGeolocation = ref<boolean>(false);
 const geoLocationError = ref<string | null>(null);
 
 const {
@@ -67,27 +67,16 @@ const {
   fetchData: fetchWeatherData,
 } = useFetch<WeatherDataMapperOutput>("", mapWeatherData);
 
-const loadingStates = computed(() => [
-  isLoadingLocationKey,
-  isLoadingWeatherData,
-  geoLocationLoading,
-]);
-
 const globalIsLoading = computed(() =>
-  loadingStates.value.some((loading) => loading.value)
+  [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
+    (loading) => loading.value
+  )
 );
 
-const errors = computed(() => [
-  geoLocationError,
-  locationKeyError,
-  weatherError,
-]);
-
 const globalError = computed(() => {
-  return errors.value.map((err) => err.value).filter(Boolean) as (
-    | string
-    | Error
-  )[];
+  return [geoLocationError, locationKeyError, weatherError]
+    .map((err) => err.value)
+    .filter(Boolean) as (string | Error)[];
 });
 
 const selectedDayData = computed(() => {
@@ -108,13 +97,13 @@ const handleDayChange = (newDay: string) => {
 
 onMounted(async () => {
   try {
-    geoLocationLoading.value = true;
+    isLoadingGeolocation.value = true;
 
     coords.value = await getLocation();
   } catch (err) {
     geoLocationError.value = err as string;
   } finally {
-    geoLocationLoading.value = false;
+    isLoadingGeolocation.value = false;
   }
 
   if (geoLocationError.value) return;
