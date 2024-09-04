@@ -1,6 +1,9 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage v-if="messages.length" :messages />
+    <WeatherWidgetMessage 
+      v-if="messages.length" 
+      :messages 
+    />
     <template v-else-if="selectedDayData && weatherData && locationKeyData">
       <WeatherWidgetPlace
         :placeInfo="[
