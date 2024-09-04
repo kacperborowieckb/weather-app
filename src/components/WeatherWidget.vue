@@ -1,9 +1,6 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage 
-      v-if="globalIsLoading"
-      :message="'Loading...'" 
-    />
+    <WeatherWidgetMessage v-if="globalIsLoading" :message="'Loading...'" />
     <WeatherWidgetMessage
       v-else-if="globalError.length"
       :message="globalError"
@@ -87,7 +84,10 @@ const errors = computed(() => [
 ]);
 
 const globalError = computed(() => {
-  return errors.value.map((err) => err.value).filter(Boolean) as (string | Error)[];
+  return errors.value.map((err) => err.value).filter(Boolean) as (
+    | string
+    | Error
+  )[];
 });
 
 const selectedDayData = computed(() => {
@@ -123,7 +123,9 @@ onMounted(async () => {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
   });
   await fetchWeatherData("GET", {
-    url: `${API_URL}${endpoints.forecast}/${locationKeyData.value?.key}`,
+    url: `${API_URL}${endpoints.forecast}${
+      import.meta.env.VITE_MOCK ? "" : `/${locationKeyData.value?.key}`
+    }`,
   });
 });
 </script>

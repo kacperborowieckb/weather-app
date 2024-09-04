@@ -1,6 +1,6 @@
-export const API_URL = import.meta.env.PROD
-  ? "http://dataservice.accuweather.com"
-  : "http://localhost:3000";
+export const API_URL = import.meta.env.VITE_MOCK
+  ? "http://localhost:3000"
+  : "http://dataservice.accuweather.com";
 
 const mockEndpoints = {
   locationKey: "/locationKey",
@@ -12,4 +12,6 @@ const prodEndpoints = {
   forecast: "/forecasts/v1/daily/5day",
 } as const;
 
-export const endpoints = import.meta.env.PROD ? prodEndpoints : mockEndpoints;
+export const endpoints = import.meta.env.VITE_MOCK
+  ? mockEndpoints
+  : prodEndpoints;
