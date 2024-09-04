@@ -1,17 +1,11 @@
 <template>
   <h2 class="place">
-    {{ props.localizedName }}, {{ props.country }}, {{ props.date }}
+    {{ props.placeInfo.join(", ") }}
   </h2>
 </template>
 
 <script setup lang="ts">
-export type Place = {
-  localizedName: string;
-  country: string;
-  date: string;
-};
-
-const props = defineProps<Place>();
+const props = defineProps<{ placeInfo: string[] }>();
 </script>
 
 <style scoped lang="scss">

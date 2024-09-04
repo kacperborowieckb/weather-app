@@ -1,8 +1,8 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage
-      v-if="isLoadingLocationKey || isLoadingWeatherData || geoLocationLoading"
-      :message="'Loading...'"
+    <WeatherWidgetMessage 
+      v-if="globalIsLoading"
+      :message="'Loading...'" 
     />
     <WeatherWidgetMessage
       v-else-if="globalError.length"
@@ -10,8 +10,11 @@
     />
     <template v-else-if="selectedDayData && weatherData && locationKeyData">
       <WeatherWidgetPlace
-        v-bind="locationKeyData"
-        :date="selectedDayData.date"
+        :placeInfo="[
+          locationKeyData.localizedName,
+          locationKeyData.country,
+          selectedDayData.date,
+        ]"
       />
       <WeatherWidgetCurrentData v-bind="selectedDayData" />
       <WeatherWidgetForecast
@@ -20,7 +23,7 @@
         @handleDayChange="handleDayChange"
       />
     </template>
-    <div v-else>Something bad happened. Please refresh the page</div>
+    <p v-else>Something bad happened. Please refresh the page</p>
   </div>
 </template>
 
@@ -67,10 +70,24 @@ const {
   fetchData: fetchWeatherData,
 } = useFetch<WeatherDataMapperOutput>("", mapWeatherData);
 
+const loadingStates = computed(() => [
+  isLoadingLocationKey,
+  isLoadingWeatherData,
+  geoLocationLoading,
+]);
+
+const globalIsLoading = computed(() =>
+  loadingStates.value.some((loading) => loading.value)
+);
+
+const errors = computed(() => [
+  geoLocationError,
+  locationKeyError,
+  weatherError,
+]);
+
 const globalError = computed(() => {
-  return [geoLocationError, locationKeyError, weatherError]
-    .map((err) => err.value)
-    .filter(Boolean) as (string | Error)[];
+  return errors.value.map((err) => err.value).filter(Boolean) as (string | Error)[];
 });
 
 const selectedDayData = computed(() => {

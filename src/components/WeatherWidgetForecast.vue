@@ -1,13 +1,14 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="forecast in props.forecastData"
-      :day="getDayPrefix(forecast.date)"
-      :weatherImage="getWeatherImageLink(forecast.day.icon)"
-      :temperature="forecast.temperature.average"
-      :temperatureUnit="forecast.temperature.unit"
-      :class="{ active: selectedDay === forecast.date }"
-      @click="emit('handleDayChange', forecast.date)"
+      v-for="{ day, date, temperature } in props.forecastData"
+      :day="getDayPrefix(date)"
+      :weatherImage="getWeatherImageLink(day.icon)"
+      :temperature="temperature.average"
+      :temperatureUnit="temperature.unit"
+      :class="{ active: selectedDay === date }"
+      :key="date"
+      @click="emit('handleDayChange', date)"
     />
   </section>
 </template>
