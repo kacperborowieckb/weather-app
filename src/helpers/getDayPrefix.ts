@@ -1,12 +1,2 @@
-export const weekDays = {
-  0: "SUN",
-  1: "MON",
-  2: "TUE",
-  3: "WED",
-  4: "THU",
-  5: "FRI",
-  6: "SAT",
-} as const;
-
 export const getDayPrefix = (time: string) =>
-  weekDays[new Date(time).getDay() as keyof typeof weekDays];
+  new Date(time).toLocaleString("en-en", { weekday: "short" });
