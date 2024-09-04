@@ -1,9 +1,8 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage v-if="globalIsLoading" :message="'Loading...'" />
-    <WeatherWidgetMessage
-      v-else-if="globalError.length"
-      :message="globalError"
+    <WeatherWidgetMessage 
+      v-if="messages.length" 
+      :messages 
     />
     <template v-else-if="selectedDayData && weatherData && locationKeyData">
       <WeatherWidgetPlace
@@ -78,6 +77,10 @@ const globalError = computed(() => {
     .map((err) => err.value)
     .filter(Boolean) as (string | Error)[];
 });
+const messages = computed(() => [
+  ...(globalIsLoading.value ? ["Loading..."] : []),
+  ...globalError.value,
+]);
 
 const selectedDayData = computed(() => {
   const currentWeatherData = weatherData.value?.dailyForecasts.find(
