@@ -1,9 +1,6 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage 
-      v-if="messages.length" 
-      :messages 
-    />
+    <WeatherWidgetMessage v-if="messages.length" :messages />
     <template v-else-if="selectedDayData && weatherData && locationKeyData">
       <WeatherWidgetPlace
         :placeInfo="[
@@ -114,10 +111,13 @@ onMounted(async () => {
   await fetchLocationKey("GET", {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
   });
+
+  const locationKeyEndpoint = import.meta.env.VITE_MOCK
+    ? ""
+    : `/${locationKeyData.value?.key}`;
+
   await fetchWeatherData("GET", {
-    url: `${API_URL}${endpoints.forecast}${
-      import.meta.env.VITE_MOCK ? "" : `/${locationKeyData.value?.key}`
-    }`,
+    url: `${API_URL}${endpoints.forecast}${locationKeyEndpoint}`,
   });
 });
 </script>
