@@ -1,25 +1,28 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage
-      v-if="statusMessages.length"
-      :messages="statusMessages"
-    />
-    <template v-else-if="selectedDayData && weatherData && locationKeyData">
-      <WeatherWidgetPlace
-        :placeInfo="[
-          locationKeyData.localizedName,
-          locationKeyData.country,
-          selectedDayData.date,
-        ]"
+    <WeatherWidgetDropdown />
+    <div class="weather-widget__content">
+      <WeatherWidgetMessage
+        v-if="statusMessages.length"
+        :messages="statusMessages"
       />
-      <WeatherWidgetCurrentData v-bind="selectedDayData" />
-      <WeatherWidgetForecast
-        :forecastData="weatherData.dailyForecasts"
-        :selectedDay
-        @handleDayChange="handleDayChange"
-      />
-    </template>
-    <p v-else>Something bad happened. Please refresh the page</p>
+      <template v-else-if="selectedDayData && weatherData && locationKeyData">
+        <WeatherWidgetPlace
+          :placeInfo="[
+            locationKeyData.localizedName,
+            locationKeyData.country,
+            selectedDayData.date,
+          ]"
+        />
+        <WeatherWidgetCurrentData v-bind="selectedDayData" />
+        <WeatherWidgetForecast
+          :forecastData="weatherData.dailyForecasts"
+          :selectedDay
+          @handleDayChange="handleDayChange"
+        />
+      </template>
+      <p v-else>Something bad happened. Please refresh the page</p>
+    </div>
   </div>
 </template>
 
@@ -41,6 +44,7 @@ import WeatherWidgetPlace from './WeatherWidgetPlace.vue';
 import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';
 import WeatherWidgetForecast from './WeatherWidgetForecast.vue';
 import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
+import WeatherWidgetDropdown from './WeatherWidgetDropdown.vue';
 
 const currentDate = getFormattedDate();
 
@@ -135,10 +139,16 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: $space-xl;
-  border: $border-primary;
-  border-radius: $radius-md;
-  padding: $p-lg;
-  min-width: 768px;
-  background-color: $clr-primary-dark;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    border: $border-primary;
+    border-radius: $radius-md;
+    padding: $p-lg;
+    min-width: 768px;
+    background-color: $clr-primary-dark;
+  }
 }
 </style>

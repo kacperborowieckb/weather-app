@@ -1,4 +1,5 @@
 $clr-text: hsl(0, 0%, 88%);
+$clr-text-muted: hsl(0, 0%, 72%);
 $clr-bg: hsl(0, 0%, 15%);
 $clr-primary-very-light: hsl(203, 51%, 37%);
 $clr-primary-light: hsl(203, 51%, 27%);
@@ -37,3 +38,5 @@ $radius-sm: 8px;
 $radius-md: 16px;
 
 $border-primary: 2px solid hsl(203, 51%, 37%);
+
+$transition-timing: 0.2s ease-out
