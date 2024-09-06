@@ -4,15 +4,15 @@
       <img
         class="weather-info__image"
         :src="imageLink"
-        :alt="`${props.day.iconPhrase}`"
+        :alt="`${day.iconPhrase}`"
       />
       <p class="weather-info__description">
-        {{ props.day.iconPhrase }}
+        {{ day.iconPhrase }}
       </p>
     </div>
     <div class="weather-info__temperature-wrapper">
       <h3 class="weather-info__temperature-info">
-        {{ props.temperature.average }}&deg;{{ props.temperature.unit }}
+        {{ temperature.average }}&deg;{{ temperature.unit }}
       </h3>
     </div>
     <ul class="weather-info__additional-info">

@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
-    <p v-for="message in props.messages">
+    <p v-for="message in messages">
       {{ message }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ messages?: (string | Error)[] }>();
+defineProps<{ messages?: (string | Error)[] }>();
 </script>
 
 <style lang="scss">
