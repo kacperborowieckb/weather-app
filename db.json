@@ -80,14 +80,14 @@
             "Severity": 7,
             "Text": "Becoming noticeably warmer Monday",
             "Category": "warmer",
-            "EndDate": "2024-09-02T20:00:00+02:00",
+            "EndDate": "2024-09-08T20:00:00+02:00",
             "EndEpochDate": 1725300000,
             "MobileLink": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?lang=en-us",
             "Link": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?lang=en-us"
         },
         "DailyForecasts": [
             {
-                "Date": "2024-09-02T07:00:00+02:00",
+                "Date": "2024-09-08T07:00:00+02:00",
                 "EpochDate": 1725253200,
                 "Temperature": {
                     "Minimum": {
@@ -118,7 +118,7 @@
                 "Link": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?day=1&lang=en-us"
             },
             {
-                "Date": "2024-09-03T07:00:00+02:00",
+                "Date": "2024-09-09T07:00:00+02:00",
                 "EpochDate": 1725339600,
                 "Temperature": {
                     "Minimum": {
@@ -149,7 +149,7 @@
                 "Link": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?day=2&lang=en-us"
             },
             {
-                "Date": "2024-09-04T07:00:00+02:00",
+                "Date": "2024-09-10T07:00:00+02:00",
                 "EpochDate": 1725426000,
                 "Temperature": {
                     "Minimum": {
@@ -180,7 +180,7 @@
                 "Link": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?day=3&lang=en-us"
             },
             {
-                "Date": "2024-09-05T07:00:00+02:00",
+                "Date": "2024-09-11T07:00:00+02:00",
                 "EpochDate": 1725512400,
                 "Temperature": {
                     "Minimum": {
@@ -211,7 +211,7 @@
                 "Link": "http://www.accuweather.com/en/pl/wola-mielecka/1383730/daily-weather-forecast/1383730?day=4&lang=en-us"
             },
             {
-                "Date": "2024-09-06T07:00:00+02:00",
+                "Date": "2024-09-12T07:00:00+02:00",
                 "EpochDate": 1725598800,
                 "Temperature": {
                     "Minimum": {

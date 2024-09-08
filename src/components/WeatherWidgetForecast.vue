@@ -2,12 +2,12 @@
   <section class="forecast">
     <WeatherWidgetForecastCard
       v-for="{ day, date, temperature } in forecastData"
+      :key="date"
       :day="getDayPrefix(date)"
       :weatherImage="getWeatherImageLink(day.icon)"
       :temperature="temperature.average"
       :temperatureUnit="temperature.unit"
       :class="{ active: selectedDay === date }"
-      :key="date"
       @click="emit('handleDayChange', date)"
     />
   </section>

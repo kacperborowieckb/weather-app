@@ -1,8 +1,8 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage 
-      v-if="messages.length" 
-      :messages 
+    <WeatherWidgetMessage
+      v-if="statusMessages.length"
+      :messages="statusMessages"
     />
     <template v-else-if="selectedDayData && weatherData && locationKeyData">
       <WeatherWidgetPlace
@@ -66,21 +66,22 @@ const {
   fetchData: fetchWeatherData,
 } = useFetch<WeatherDataMapperOutput>("", mapWeatherData);
 
-const globalIsLoading = computed(() =>
+const isLoading = computed(() =>
   [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
     (loading) => loading.value
   )
 );
 
-const globalError = computed(() => {
+const globalErrors = computed(() => {
   return [geoLocationError, locationKeyError, weatherError]
     .map((err) => err.value)
     .filter(Boolean) as (string | Error)[];
 });
-const messages = computed(() => [
-  ...(globalIsLoading.value ? ["Loading..."] : []),
-  ...globalError.value,
-]);
+const statusMessages = computed(() => {
+  return isLoading.value
+    ? ["Loading...", ...globalErrors.value]
+    : globalErrors.value;
+});
 
 const selectedDayData = computed(() => {
   const currentWeatherData = weatherData.value?.dailyForecasts.find(

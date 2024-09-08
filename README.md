@@ -5,8 +5,10 @@
 ### Mock
 
 `npm install`
-`json-server db.json --watch --delay=500`
+`npm run server`
 `npm run dev:mock`
+
+To mock delay go to chrome's network tab > throttling
 
 ### Prod
 

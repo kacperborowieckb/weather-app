@@ -1,6 +1,9 @@
 <template>
-  <div class="wrapper">
-    <p v-for="message in messages">
+  <div class="weather-message-wrapper">
+    <p 
+      v-for="message in messages"
+      :key="message.toString()"
+    >
       {{ message }}
     </p>
   </div>
@@ -11,7 +14,7 @@ defineProps<{ messages?: (string | Error)[] }>();
 </script>
 
 <style lang="scss">
-.wrapper {
+.weather-message-wrapper {
   display: flex;
   flex-direction: column;
   gap: $space-sm;
