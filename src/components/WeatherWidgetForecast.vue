@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { getDayPrefix } from "@/helpers/getDayPrefix";
-import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
-import { type ForecastItem } from "@/utils/dataMappers";
+import { getDayPrefix } from '@/helpers/getDayPrefix';
+import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
+import { type ForecastItem } from '@/utils/dataMappers';
 
-import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
+import WeatherWidgetForecastCard from './WeatherWidgetForecastCard.vue';
 
 export type ForecastData = ForecastItem[];
 
@@ -28,7 +28,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "handleDayChange", index: string): void;
+  (e: 'handleDayChange', index: string): void;
 }>();
 </script>
 

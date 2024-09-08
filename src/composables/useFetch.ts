@@ -2,8 +2,8 @@ import axios, {
   type Method,
   type AxiosRequestConfig,
   type AxiosResponse,
-} from "axios";
-import { ref, type Ref } from "vue";
+} from 'axios';
+import { ref, type Ref } from 'vue';
 
 type FetchData = (
   method?: Method,
@@ -25,7 +25,7 @@ export function useFetch<T>(
   const error: Ref<Error | null> = ref(null);
   const isLoading: Ref<boolean> = ref(false);
 
-  const fetchData: FetchData = async (method = "GET", config) => {
+  const fetchData: FetchData = async (method = 'GET', config) => {
     error.value = null;
     isLoading.value = true;
 

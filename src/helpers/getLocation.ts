@@ -9,7 +9,7 @@ export const getLocation = async (): Promise<Coordinates> => {
       ({ coords: { latitude, longitude } }) => resolve({ latitude, longitude }),
       (err) => {
         if (err.code === 1) {
-          reject("Please allow geolocation");
+          reject('Please allow geolocation');
         }
 
         reject(err.message);

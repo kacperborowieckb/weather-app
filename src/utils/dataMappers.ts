@@ -1,9 +1,9 @@
-import { getFormattedDate } from "@/helpers/getFormattedDate";
+import { getFormattedDate } from '@/helpers/getFormattedDate';
 
 export type WeatherDataMapperInput = {
   DailyForecasts: {
     Date: string;
-    Temperature: Record<"Minimum" | "Maximum", { Value: number; Unit: string }>;
+    Temperature: Record<'Minimum' | 'Maximum', { Value: number; Unit: string }>;
     Day: {
       Icon: number;
       IconPhrase: string;

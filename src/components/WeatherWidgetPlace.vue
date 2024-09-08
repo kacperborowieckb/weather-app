@@ -1,6 +1,6 @@
 <template>
   <h2 class="place">
-    {{ placeInfo.join(", ") }}
+    {{ placeInfo.join(', ') }}
   </h2>
 </template>
 

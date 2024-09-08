@@ -24,23 +24,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted } from 'vue';
 
 import {
   type LocationKeyMapperOutput,
   type WeatherDataMapperOutput,
   mapLocationKeyData,
   mapWeatherData,
-} from "@/utils/dataMappers";
-import { type Coordinates, getLocation } from "@/helpers/getLocation";
-import { getFormattedDate } from "@/helpers/getFormattedDate";
-import { useFetch } from "@/composables/useFetch";
-import { API_URL, endpoints } from "@/constants";
+} from '@/utils/dataMappers';
+import { type Coordinates, getLocation } from '@/helpers/getLocation';
+import { getFormattedDate } from '@/helpers/getFormattedDate';
+import { useFetch } from '@/composables/useFetch';
+import { API_URL, endpoints } from '@/constants';
 
-import WeatherWidgetPlace from "./WeatherWidgetPlace.vue";
-import WeatherWidgetCurrentData from "./WeatherWidgetCurrentData.vue";
-import WeatherWidgetForecast from "./WeatherWidgetForecast.vue";
-import WeatherWidgetMessage from "./WeatherWidgetMessage.vue";
+import WeatherWidgetPlace from './WeatherWidgetPlace.vue';
+import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';
+import WeatherWidgetForecast from './WeatherWidgetForecast.vue';
+import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
 
 const currentDate = getFormattedDate();
 
@@ -64,7 +64,7 @@ const {
   error: weatherError,
   isLoading: isLoadingWeatherData,
   fetchData: fetchWeatherData,
-} = useFetch<WeatherDataMapperOutput>("", mapWeatherData);
+} = useFetch<WeatherDataMapperOutput>('', mapWeatherData);
 
 const isLoading = computed(() =>
   [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
@@ -79,7 +79,7 @@ const globalErrors = computed(() => {
 });
 const statusMessages = computed(() => {
   return isLoading.value
-    ? ["Loading...", ...globalErrors.value]
+    ? ['Loading...', ...globalErrors.value]
     : globalErrors.value;
 });
 
@@ -112,15 +112,15 @@ onMounted(async () => {
 
   if (geoLocationError.value) return;
 
-  await fetchLocationKey("GET", {
+  await fetchLocationKey('GET', {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
   });
 
   const locationKeyEndpoint = import.meta.env.VITE_MOCK
-    ? ""
+    ? ''
     : `/${locationKeyData.value?.key}`;
 
-  await fetchWeatherData("GET", {
+  await fetchWeatherData('GET', {
     url: `${API_URL}${endpoints.forecast}${locationKeyEndpoint}`,
   });
 });

@@ -27,11 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 
-import { getListLabel } from "@/utils/strings";
-import { getWeatherImageLink } from "@/helpers/getWeatherImageLink";
-import { type ForecastItem } from "@/utils/dataMappers";
+import { getListLabel } from '@/utils/strings';
+import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
+import { type ForecastItem } from '@/utils/dataMappers';
 
 const props = defineProps<ForecastItem>();
 

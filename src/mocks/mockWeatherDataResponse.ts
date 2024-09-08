@@ -1,96 +1,96 @@
-import { WeatherDataMapperInput } from "@/utils/dataMappers";
+import { WeatherDataMapperInput } from '@/utils/dataMappers';
 
 export const mockWeatherResponseData: WeatherDataMapperInput = {
   DailyForecasts: [
     {
-      Date: "2024-09-02T07:00:00+02:00",
+      Date: '2024-09-02T07:00:00+02:00',
       Temperature: {
         Minimum: {
           Value: 58,
-          Unit: "F",
+          Unit: 'F',
         },
         Maximum: {
           Value: 84,
-          Unit: "F",
+          Unit: 'F',
         },
       },
       Day: {
         Icon: 4,
-        IconPhrase: "Intermittent clouds",
+        IconPhrase: 'Intermittent clouds',
       },
-      Sources: ["AccuWeather"],
+      Sources: ['AccuWeather'],
     },
     {
-      Date: "2024-09-03T07:00:00+02:00",
+      Date: '2024-09-03T07:00:00+02:00',
       Temperature: {
         Minimum: {
           Value: 59,
-          Unit: "F",
+          Unit: 'F',
         },
         Maximum: {
           Value: 88,
-          Unit: "F",
+          Unit: 'F',
         },
       },
       Day: {
         Icon: 2,
-        IconPhrase: "Mostly sunny",
+        IconPhrase: 'Mostly sunny',
       },
-      Sources: ["AccuWeather"],
+      Sources: ['AccuWeather'],
     },
     {
-      Date: "2024-09-04T07:00:00+02:00",
+      Date: '2024-09-04T07:00:00+02:00',
       Temperature: {
         Minimum: {
           Value: 58,
-          Unit: "F",
+          Unit: 'F',
         },
         Maximum: {
           Value: 86,
-          Unit: "F",
+          Unit: 'F',
         },
       },
       Day: {
         Icon: 2,
-        IconPhrase: "Mostly sunny",
+        IconPhrase: 'Mostly sunny',
       },
-      Sources: ["AccuWeather"],
+      Sources: ['AccuWeather'],
     },
     {
-      Date: "2024-09-05T07:00:00+02:00",
+      Date: '2024-09-05T07:00:00+02:00',
       Temperature: {
         Minimum: {
           Value: 56,
-          Unit: "F",
+          Unit: 'F',
         },
         Maximum: {
           Value: 84,
-          Unit: "F",
+          Unit: 'F',
         },
       },
       Day: {
         Icon: 3,
-        IconPhrase: "Partly sunny",
+        IconPhrase: 'Partly sunny',
       },
-      Sources: ["AccuWeather"],
+      Sources: ['AccuWeather'],
     },
     {
-      Date: "2024-09-06T07:00:00+02:00",
+      Date: '2024-09-06T07:00:00+02:00',
       Temperature: {
         Minimum: {
           Value: 58,
-          Unit: "F",
+          Unit: 'F',
         },
         Maximum: {
           Value: 82,
-          Unit: "F",
+          Unit: 'F',
         },
       },
       Day: {
         Icon: 2,
-        IconPhrase: "Mostly sunny",
+        IconPhrase: 'Mostly sunny',
       },
-      Sources: ["AccuWeather"],
+      Sources: ['AccuWeather'],
     },
   ],
 };
