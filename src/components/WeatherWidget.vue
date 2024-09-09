@@ -1,6 +1,9 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetDropdown @handleLocationKeyChange="handleLocationKeyChange" />
+    <WeatherWidgetDropdown
+      :selectedLocationKey
+      @handleLocationKeyChange="handleLocationKeyChange"
+    />
     <div class="weather-widget__content">
       <WeatherWidgetMessage
         v-if="statusMessages.length"
@@ -107,18 +110,15 @@ const currentLocationData = computed(
   () => selectedLocationKey.value || locationKeyData.value
 );
 
-watch(
-  () => currentLocationData.value?.key,
-  (locationKey) => {
-    const locationKeyEndpoint = import.meta.env.VITE_MOCK
-      ? ''
-      : `/${locationKey}`;
+watch(currentLocationData, () => {
+  const locationKeyEndpoint = import.meta.env.VITE_MOCK
+    ? ''
+    : `/${currentLocationData.value?.key}`;
 
-    fetchWeatherData('GET', {
-      url: `${locationKeyEndpoint}`,
-    });
-  }
-);
+  fetchWeatherData('GET', {
+    url: `${locationKeyEndpoint}`,
+  });
+});
 
 const handleDayChange = (newDay: string) => {
   if (newDay === selectedDay.value) {
@@ -128,7 +128,7 @@ const handleDayChange = (newDay: string) => {
   }
 };
 
-const handleLocationKeyChange = (locationKey: PlaceInfo) => {
+const handleLocationKeyChange = (locationKey: PlaceInfo | null) => {
   selectedLocationKey.value = locationKey;
 };
 

@@ -1,28 +1,38 @@
 <template>
   <div class="dropdown">
-    <input
-      type="text"
-      class="dropdown__input"
-      placeholder="Search a place"
-      aria-label="Search a place for weather forecast"
-      v-model="searchValue"
-      @input="handleInputChange"
-    />
-    <ul class="dropdown__list">
-      <WeatherWidgetMessage
-        v-if="statusMessages.length"
-        :messages="statusMessages"
+    <div class="dropdown__input-wrapper">
+      <input
+        type="text"
+        class="dropdown__input"
+        placeholder="Search a place"
+        aria-label="Search a place for weather forecast"
+        v-model="searchValue"
+        @input="handleInputChange"
       />
-      <template v-else-if="autocompleteData">
-        <li
-          v-for="place in autocompleteData"
-          class="dropdown__list-item"
-          @click="() => handlePlaceChange(place)"
-        >
-          {{ `${place.localizedName}, ${place.country}` }}
-        </li>
-      </template>
-    </ul>
+      <ul class="dropdown__list">
+        <WeatherWidgetMessage
+          v-if="statusMessages.length"
+          :messages="statusMessages"
+        />
+        <template v-else-if="autocompleteData">
+          <li
+            v-for="place in autocompleteData"
+            :key="place.key"
+            class="dropdown__list-item"
+            @click="handlePlaceChange(place)"
+          >
+            {{ `${place.localizedName}, ${place.country}` }}
+          </li>
+        </template>
+      </ul>
+    </div>
+    <button
+      class="dropdown__reset-btn"
+      v-if="selectedLocationKey"
+      @click="handlePlaceReset"
+    >
+      Reset
+    </button>
   </div>
 </template>
 
@@ -52,15 +62,15 @@ const {
   mapAutocompleteData
 );
 
+defineProps<{ selectedLocationKey: PlaceInfo | null }>();
+
 const emit = defineEmits<{
-  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo): void;
+  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo | null): void;
 }>();
 
-const loadingMessage = computed(() => {
-  if (isLoadingAutocomplete.value) {
-    return 'Loading...';
-  }
-});
+const loadingMessage = computed(() =>
+  isLoadingAutocomplete.value ? 'Loading...' : ''
+);
 
 const noResultsMessage = computed(() => {
   if (
@@ -93,6 +103,11 @@ const handlePlaceChange = (place: PlaceInfo) => {
   searchValue.value = `${place.localizedName}, ${place.country}`;
   emit('handleLocationKeyChange', place);
 };
+
+const handlePlaceReset = () => {
+  searchValue.value = '';
+  emit('handleLocationKeyChange', null);
+};
 </script>
 
 <style scoped lang="scss">
@@ -100,16 +115,21 @@ const handlePlaceChange = (place: PlaceInfo) => {
   $dropdown-max-height: 240px;
   $input-width: 160px;
 
-  position: relative;
+  display: flex;
+  gap: $space-xs;
   width: min-content;
   margin-left: auto;
 
-  &__input {
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input,
+  &__reset-btn {
     border: $border-primary;
     outline: none;
     border-radius: $radius-sm;
     padding: $p-xs;
-    width: $input-width;
     background-color: $clr-primary-dark;
     cursor: pointer;
     color: $clr-text;
@@ -119,6 +139,20 @@ const handlePlaceChange = (place: PlaceInfo) => {
     &:hover {
       background-color: $clr-primary-light;
     }
+  }
+
+  &__input {
+    width: $input-width;
+
+    &::placeholder {
+      color: $clr-text;
+      text-align: center;
+      transition: all $transition-duration ease-out;
+    }
+
+    &:focus::placeholder {
+      color: $clr-text-muted;
+    }
 
     &:focus,
     &:not(:placeholder-shown) {
@@ -127,24 +161,21 @@ const handlePlaceChange = (place: PlaceInfo) => {
       background-color: $clr-primary-light;
       cursor: text;
     }
+  }
 
-    &:focus::placeholder {
-      color: $clr-text-muted;
-    }
+  &__reset-btn {
+    overflow: hidden;
+  }
 
-    &:focus ~ ul {
+  &__input-wrapper:active &__input,
+  &__input:focus {
+    & ~ ul {
       max-height: $dropdown-max-height;
       border-color: $clr-primary-very-light;
 
       & li {
         opacity: 1;
       }
-    }
-
-    &::placeholder {
-      color: $clr-text;
-      text-align: center;
-      transition: all $transition-duration ease-out;
     }
   }
 
