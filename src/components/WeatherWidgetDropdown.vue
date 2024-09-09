@@ -10,7 +10,7 @@
     />
     <ul class="dropdown__list">
       <WeatherWidgetMessage
-        v-if="shouldDisplayStatusMessages"
+        v-if="statusMessages.length"
         :messages="statusMessages"
       />
       <template v-else-if="autocompleteData">
@@ -22,7 +22,6 @@
           {{ `${place.localizedName}, ${place.country}` }}
         </li>
       </template>
-      <p v-else class="dropdown__list-message">No results.</p>
     </ul>
   </div>
 </template>
@@ -57,17 +56,26 @@ const emit = defineEmits<{
   (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo): void;
 }>();
 
-const shouldDisplayStatusMessages = computed(() => {
-  return (
-    (autocompleteData.value === null && isLoadingAutocomplete.value) ||
-    autocompleteError.value
-  );
+const loadingMessage = computed(() => {
+  if (autocompleteData.value === null && isLoadingAutocomplete.value) {
+    return 'Loading...';
+  }
+});
+
+const noResultsMessage = computed(() => {
+  if (
+    !loadingMessage.value &&
+    (!autocompleteData.value || autocompleteData.value.length === 0)
+  ) {
+    return 'No results.';
+  }
 });
 
 const statusMessages = computed(() => {
   return [
-    isLoadingAutocomplete.value && 'Loading...',
+    loadingMessage.value,
     autocompleteError.value,
+    noResultsMessage.value,
   ].filter(Boolean) as (string | Error)[];
 });
 

@@ -13,7 +13,7 @@
           :placeInfo="[
             currentLocationData.localizedName,
             currentLocationData.country,
-            selectedDay,
+            selectedDayData.date,
           ]"
         />
         <WeatherWidgetCurrentData v-bind="selectedDayData" />
