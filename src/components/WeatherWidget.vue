@@ -64,7 +64,10 @@ const {
   error: weatherError,
   isLoading: isLoadingWeatherData,
   fetchData: fetchWeatherData,
-} = useFetch<WeatherDataMapperOutput>('', mapWeatherData);
+} = useFetch<WeatherDataMapperOutput>(
+  `${API_URL}${endpoints.forecast}`,
+  mapWeatherData
+);
 
 const isLoading = computed(() =>
   [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
@@ -77,6 +80,7 @@ const globalErrors = computed(() => {
     .map((err) => err.value)
     .filter(Boolean) as (string | Error)[];
 });
+
 const statusMessages = computed(() => {
   return isLoading.value
     ? ['Loading...', ...globalErrors.value]
@@ -121,7 +125,7 @@ onMounted(async () => {
     : `/${locationKeyData.value?.key}`;
 
   await fetchWeatherData('GET', {
-    url: `${API_URL}${endpoints.forecast}${locationKeyEndpoint}`,
+    url: `${locationKeyEndpoint}`,
   });
 });
 </script>

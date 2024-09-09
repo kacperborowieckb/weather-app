@@ -31,7 +31,7 @@ export function useFetch<T>(
 
     try {
       const res: AxiosResponse<T> = await axios.request({
-        url,
+        baseURL: url,
         method,
         ...config,
         params: { apikey: import.meta.env.VITE_API_KEY, ...config?.params },
