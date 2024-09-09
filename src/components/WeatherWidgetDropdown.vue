@@ -57,7 +57,7 @@ const emit = defineEmits<{
 }>();
 
 const loadingMessage = computed(() => {
-  if (autocompleteData.value === null && isLoadingAutocomplete.value) {
+  if (isLoadingAutocomplete.value) {
     return 'Loading...';
   }
 });
@@ -176,11 +176,6 @@ const handlePlaceChange = (place: PlaceInfo) => {
       background-color: $clr-primary-light;
       cursor: pointer;
     }
-  }
-
-  &__list-message {
-    padding: $p-xs;
-    text-align: center;
   }
 }
 </style>

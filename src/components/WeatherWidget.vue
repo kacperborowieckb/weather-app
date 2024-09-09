@@ -145,7 +145,7 @@ onMounted(async () => {
 
   if (geoLocationError.value) return;
 
-  await fetchLocationKey('GET', {
+  fetchLocationKey('GET', {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
   });
 });
