@@ -1,23 +1,74 @@
 <template>
   <div class="dropdown">
     <input
-      class="dropdown__input"
       type="text"
+      class="dropdown__input"
       placeholder="Search a place"
       aria-label="Search a place for weather forecast"
+      v-model="searchValue"
+      @input="handleInputChange"
     />
     <ul class="dropdown__list">
-      <li class="dropdown__list-item">Lublin, Poland</li>
-      <li class="dropdown__list-item">
-        Lubumbashi, Democratic Republic of the Congo
-      </li>
-      <li class="dropdown__list-item">Lubei District, China</li>
-      <li class="dropdown__list-item">Lublin, Poland</li>
+      <WeatherWidgetMessage
+        v-if="shouldDisplayStatusMessages"
+        :messages="statusMessages"
+      />
+      <template v-else-if="autocompleteData">
+        <li
+          v-for="{ localizedName, countryName } in autocompleteData"
+          class="dropdown__list-item"
+        >
+          {{ `${localizedName}, ${countryName}` }}
+        </li>
+      </template>
+      <p v-else class="dropdown__list-message">No results.</p>
     </ul>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+
+import { useFetch } from '@/composables/useFetch';
+import { API_URL, ENDPOINTS } from '@/constants';
+import { mapAutocompleteData } from '@/utils/dataMappers';
+import { debounce } from '@/utils/debounce';
+
+import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
+
+const searchValue = ref('');
+
+const {
+  data: autocompleteData,
+  error: autocompleteError,
+  isLoading: isLoadingAutocomplete,
+  fetchData: fetchAutocompleteResults,
+} = useFetch(`${API_URL}${ENDPOINTS.autocomplete}`, mapAutocompleteData);
+
+const shouldDisplayStatusMessages = computed(() => {
+  return (
+    (autocompleteData.value === null && isLoadingAutocomplete.value) ||
+    autocompleteError.value
+  );
+});
+
+const statusMessages = computed(() => {
+  return [
+    isLoadingAutocomplete.value && 'Loading...',
+    autocompleteError.value,
+  ].filter(Boolean) as (string | Error)[];
+});
+
+const debouncedFetchAutocompleteResults = debounce(fetchAutocompleteResults);
+
+const handleInputChange = () => {
+  if (!searchValue.value) return;
+
+  debouncedFetchAutocompleteResults('GET', {
+    params: { q: searchValue.value },
+  });
+};
+</script>
 
 <style scoped lang="scss">
 .dropdown {
@@ -39,6 +90,10 @@
     color: $clr-text;
     font-size: $fs-sm;
     transition: all $transition-duration ease-out;
+
+    &:hover {
+      background-color: $clr-primary-light;
+    }
 
     &:focus,
     &:not(:placeholder-shown) {
@@ -96,6 +151,11 @@
       background-color: $clr-primary-light;
       cursor: pointer;
     }
+  }
+
+  &__list-message {
+    padding: $p-xs;
+    text-align: center;
   }
 }
 </style>

@@ -79,3 +79,27 @@ export const mapLocationKeyData = (
   localizedName: data.LocalizedName,
   country: data.Country.LocalizedName,
 });
+
+export type AutocompleteMapperInput = {
+  Key: string;
+  LocalizedName: string;
+  Country: {
+    LocalizedName: string;
+  };
+}[];
+
+export type AutocompleteMapperOutput = {
+  locationKey: string;
+  localizedName: string;
+  countryName: string;
+}[];
+
+export const mapAutocompleteData = (
+  data: AutocompleteMapperInput
+): AutocompleteMapperOutput => {
+  return data.map((city) => ({
+    locationKey: city.Key,
+    localizedName: city.LocalizedName,
+    countryName: city.Country.LocalizedName,
+  }));
+};

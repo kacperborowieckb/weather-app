@@ -38,7 +38,7 @@ import {
 import { type Coordinates, getLocation } from '@/helpers/getLocation';
 import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
-import { API_URL, endpoints } from '@/constants';
+import { API_URL, ENDPOINTS } from '@/constants';
 
 import WeatherWidgetPlace from './WeatherWidgetPlace.vue';
 import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';
@@ -59,7 +59,7 @@ const {
   isLoading: isLoadingLocationKey,
   fetchData: fetchLocationKey,
 } = useFetch<LocationKeyMapperOutput>(
-  `${API_URL}${endpoints.locationKey}`,
+  `${API_URL}${ENDPOINTS.locationKey}`,
   mapLocationKeyData
 );
 
@@ -69,7 +69,7 @@ const {
   isLoading: isLoadingWeatherData,
   fetchData: fetchWeatherData,
 } = useFetch<WeatherDataMapperOutput>(
-  `${API_URL}${endpoints.forecast}`,
+  `${API_URL}${ENDPOINTS.forecast}`,
   mapWeatherData
 );
 

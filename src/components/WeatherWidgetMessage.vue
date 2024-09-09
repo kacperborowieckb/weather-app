@@ -1,9 +1,6 @@
 <template>
   <div class="weather-message-wrapper">
-    <p 
-      v-for="message in messages"
-      :key="message.toString()"
-    >
+    <p v-for="message in messages" :key="message.toString()">
       {{ message }}
     </p>
   </div>
@@ -18,9 +15,9 @@ defineProps<{ messages?: (string | Error)[] }>();
   display: flex;
   flex-direction: column;
   gap: $space-sm;
+  padding: $p-xs;
   justify-content: center;
   align-items: center;
-  aspect-ratio: 2.5/1;
   text-align: center;
 }
 </style>
