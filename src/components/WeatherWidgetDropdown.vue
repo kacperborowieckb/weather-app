@@ -1,15 +1,15 @@
 <template>
-  <div class="dropdown">
-    <div class="dropdown__input-wrapper">
+  <div class="weather-widget-dropdown">
+    <div class="weather-widget-dropdown__input-wrapper">
       <input
         type="text"
-        class="dropdown__input"
+        class="weather-widget-dropdown__input"
         placeholder="Search a place"
         aria-label="Search a place for weather forecast"
         v-model="searchValue"
         @input="handleInputChange"
       />
-      <ul class="dropdown__list">
+      <ul class="weather-widget-dropdown__list">
         <WeatherWidgetMessage
           v-if="statusMessages.length"
           :messages="statusMessages"
@@ -18,7 +18,7 @@
           <li
             v-for="place in autocompleteData"
             :key="place.key"
-            class="dropdown__list-item"
+            class="weather-widget-dropdown__list-item"
             @click="handlePlaceChange(place)"
           >
             {{ `${place.localizedName}, ${place.country}` }}
@@ -27,9 +27,9 @@
       </ul>
     </div>
     <button
-      class="dropdown__reset-btn"
+      class="weather-widget-dropdown__reset-btn"
       v-if="selectedLocationKey"
-      @click="handlePlaceReset"
+      @click="handlePlaceChange(null)"
     >
       Reset
     </button>
@@ -52,6 +52,12 @@ import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
 
 const searchValue = ref('');
 
+defineProps<{ selectedLocationKey: PlaceInfo | null }>();
+
+const emit = defineEmits<{
+  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo | null): void;
+}>();
+
 const {
   data: autocompleteData,
   error: autocompleteError,
@@ -61,12 +67,6 @@ const {
   `${API_URL}${ENDPOINTS.autocomplete}`,
   mapAutocompleteData
 );
-
-defineProps<{ selectedLocationKey: PlaceInfo | null }>();
-
-const emit = defineEmits<{
-  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo | null): void;
-}>();
 
 const loadingMessage = computed(() =>
   isLoadingAutocomplete.value ? 'Loading...' : ''
@@ -99,26 +99,21 @@ const handleInputChange = () => {
   });
 };
 
-const handlePlaceChange = (place: PlaceInfo) => {
-  searchValue.value = `${place.localizedName}, ${place.country}`;
+const handlePlaceChange = (place: PlaceInfo | null) => {
+  searchValue.value = place ? `${place.localizedName}, ${place.country}` : '';
   emit('handleLocationKeyChange', place);
-};
-
-const handlePlaceReset = () => {
-  searchValue.value = '';
-  emit('handleLocationKeyChange', null);
 };
 </script>
 
 <style scoped lang="scss">
-.dropdown {
+.weather-widget-dropdown {
   $dropdown-max-height: 240px;
   $input-width: 160px;
 
   display: flex;
   gap: $space-xs;
-  width: min-content;
   margin-left: auto;
+  width: min-content;
 
   &__input-wrapper {
     position: relative;
@@ -185,7 +180,7 @@ const handlePlaceReset = () => {
     left: 0%;
     width: 100%;
     max-height: 0;
-    overflow-x: scroll;
+    overflow-y: scroll;
     list-style: none;
     border: $border-primary;
     border-top: none;

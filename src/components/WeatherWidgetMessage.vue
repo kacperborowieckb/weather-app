@@ -1,6 +1,9 @@
 <template>
   <div class="weather-message-wrapper">
-    <p v-for="message in messages" :key="message.toString()">
+    <p 
+      v-for="message in messages"
+      :key="message.toString()"
+    >
       {{ message }}
     </p>
   </div>
