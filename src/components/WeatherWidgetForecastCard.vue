@@ -1,21 +1,26 @@
 <template>
   <div class="forecast-card">
-    <h4 class="forecast-card__day">{{ props.day }}</h4>
+    <h4 class="forecast-card__day">
+      {{ day }}
+    </h4>
     <div class="forecast-card__image">
       <img 
-        :src="props.weatherImage" 
-        :alt="`Weather Image for ${props.day}`" 
+        :src="weatherImage" 
+        :alt="`Weather Image for ${day}`" 
       />
     </div>
-    <p class="forecast-card__temperature">{{ props.temperature }}&deg;C</p>
+    <p class="forecast-card__temperature">
+      {{ temperature }}&deg;{{ temperatureUnit }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   day: string;
   weatherImage: string;
   temperature: number;
+  temperatureUnit: string;
 }>();
 </script>
 

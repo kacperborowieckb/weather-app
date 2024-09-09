@@ -1,31 +1,34 @@
 <template>
   <section class="forecast">
     <WeatherWidgetForecastCard
-      v-for="forecast in props.forecastData"
-      :day="getDayPrefix(forecast.date)"
-      :weatherImage="forecast.weatherIcon"
-      :temperature="forecast.temperature"
-      :class="{ active: selectedDay === forecast.date }"
-      @click="emit('handleDayChange', forecast.date)"
+      v-for="{ day, date, temperature } in forecastData"
+      :key="date"
+      :day="getDayPrefix(date)"
+      :weatherImage="getWeatherImageLink(day.icon)"
+      :temperature="temperature.average"
+      :temperatureUnit="temperature.unit"
+      :class="{ active: selectedDay === date }"
+      @click="emit('handleDayChange', date)"
     />
   </section>
 </template>
 
 <script setup lang="ts">
-import { getDayPrefix } from "@/helpers/getDayPrefix";
+import { getDayPrefix } from '@/helpers/getDayPrefix';
+import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
+import { type ForecastItem } from '@/utils/dataMappers';
 
-import WeatherWidgetForecastCard from "./WeatherWidgetForecastCard.vue";
-import { type WeatherData } from "./WeatherWidgetCurrentData.vue";
+import WeatherWidgetForecastCard from './WeatherWidgetForecastCard.vue';
 
-export type ForecastData = (WeatherData & { date: string })[];
+export type ForecastData = ForecastItem[];
 
-const props = defineProps<{
+defineProps<{
   forecastData: ForecastData;
   selectedDay: string | null;
 }>();
 
 const emit = defineEmits<{
-  (e: "handleDayChange", index: string): void;
+  (e: 'handleDayChange', index: string): void;
 }>();
 </script>
 

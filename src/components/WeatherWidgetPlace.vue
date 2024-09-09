@@ -1,15 +1,11 @@
 <template>
-  <h2 class="place">{{ props.name }}, {{ props.country }}, {{ props.date }}</h2>
+  <h2 class="place">
+    {{ placeInfo.join(', ') }}
+  </h2>
 </template>
 
 <script setup lang="ts">
-export type Place = {
-  name: string;
-  country: string;
-  date?: string;
-};
-
-const props = defineProps<Place>();
+defineProps<{ placeInfo: string[] }>();
 </script>
 
 <style scoped lang="scss">

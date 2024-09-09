@@ -1,57 +1,81 @@
-import { WeatherData } from "@/components/WeatherWidgetCurrentData.vue";
-import { ForecastData } from "@/components/WeatherWidgetForecast.vue";
-import { Place } from "@/components/WeatherWidgetPlace.vue";
-
-type WeatherDataResponse = {
-  weather_icons: string[];
-  weather_descriptions: string[];
-  wind_speed: number;
-  uv_index: number;
-  temperature: number;
-  pressure: number;
-};
+import { getFormattedDate } from '@/helpers/getFormattedDate';
 
 export type WeatherDataMapperInput = {
-  location: Place;
-  current: WeatherDataResponse;
-  forecast: Record<string, WeatherDataResponse & { date: string }>;
+  DailyForecasts: {
+    Date: string;
+    Temperature: Record<'Minimum' | 'Maximum', { Value: number; Unit: string }>;
+    Day: {
+      Icon: number;
+      IconPhrase: string;
+    };
+    Sources: string[];
+  }[];
+};
+
+export type ForecastItem = {
+  date: string;
+  temperature: {
+    minimum: number;
+    maximum: number;
+    average: number;
+    unit: string;
+  };
+  day: {
+    icon: number;
+    iconPhrase: string;
+  };
+  sources: string[];
 };
 
 export type WeatherDataMapperOutput = {
-  location: Place;
-  current: WeatherData;
-  forecast: ForecastData;
+  dailyForecasts: ForecastItem[];
 };
 
 export const mapWeatherData = (
   data: WeatherDataMapperInput
 ): WeatherDataMapperOutput => {
-  const forecastMap: ForecastData = Object.keys(data.forecast).map(
+  const dailyForecastsMap: ForecastItem[] = data.DailyForecasts.map(
     (currentForecast) => {
-      const forecastData = data.forecast[currentForecast];
+      const temperature = currentForecast.Temperature;
 
       return {
-        uvIndex: forecastData.uv_index,
-        weatherDescription: forecastData.weather_descriptions[0],
-        weatherIcon: forecastData.weather_icons[0],
-        windSpeed: forecastData.wind_speed,
-        temperature: forecastData.temperature,
-        pressure: forecastData.pressure,
-        date: forecastData.date,
+        date: getFormattedDate(currentForecast.Date),
+        temperature: {
+          minimum: temperature.Minimum.Value,
+          maximum: temperature.Maximum.Value,
+          average: (temperature.Minimum.Value + temperature.Maximum.Value) / 2,
+          unit: temperature.Minimum.Unit,
+        },
+        day: {
+          icon: currentForecast.Day.Icon,
+          iconPhrase: currentForecast.Day.IconPhrase,
+        },
+        sources: currentForecast.Sources,
       };
     }
   );
 
-  return {
-    location: data.location,
-    current: {
-      weatherIcon: data.current.weather_icons[0],
-      weatherDescription: data.current.weather_descriptions[0],
-      windSpeed: data.current.wind_speed,
-      uvIndex: data.current.uv_index,
-      temperature: data.current.temperature,
-      pressure: data.current.pressure,
-    },
-    forecast: forecastMap,
+  return { dailyForecasts: dailyForecastsMap };
+};
+
+type LocationKeyMapperInput = {
+  Key: string;
+  LocalizedName: string;
+  Country: {
+    LocalizedName: string;
   };
 };
+
+export type LocationKeyMapperOutput = {
+  key: string;
+  localizedName: string;
+  country: string;
+};
+
+export const mapLocationKeyData = (
+  data: LocationKeyMapperInput
+): LocationKeyMapperOutput => ({
+  key: data.Key,
+  localizedName: data.LocalizedName,
+  country: data.Country.LocalizedName,
+});

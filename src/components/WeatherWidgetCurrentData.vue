@@ -3,16 +3,16 @@
     <div class="weather-info__image-wrapper">
       <img
         class="weather-info__image"
-        :src="props.weatherIcon"
-        :alt="`${props.weatherDescription} Weather Image`"
+        :src="imageLink"
+        :alt="`${day.iconPhrase}`"
       />
       <p class="weather-info__description">
-        {{ props.weatherDescription }}
+        {{ day.iconPhrase }}
       </p>
     </div>
     <div class="weather-info__temperature-wrapper">
       <h3 class="weather-info__temperature-info">
-        {{ props.temperature }}&deg;C
+        {{ temperature.average }}&deg;{{ temperature.unit }}
       </h3>
     </div>
     <ul class="weather-info__additional-info">
@@ -27,27 +27,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue';
 
-import { getListLabel } from "@/utils/strings";
+import { getListLabel } from '@/utils/strings';
+import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
+import { type ForecastItem } from '@/utils/dataMappers';
 
-export type WeatherData = {
-  temperature: number;
-  weatherIcon: string;
-  weatherDescription: string;
-  windSpeed: number;
-  pressure: number;
-  uvIndex: number;
-  date?: string;
-};
+const props = defineProps<ForecastItem>();
 
-const props = defineProps<WeatherData>();
+const sideListData = computed(() => ({
+  minTemperature: props.temperature.minimum,
+  maxTemperature: props.temperature.maximum,
+  source: props.sources[0],
+}));
 
-const sideListData = computed(() => {
-  const { windSpeed, pressure, uvIndex } = props;
-
-  return { windSpeed, pressure, uvIndex };
-});
+const imageLink = computed(() => getWeatherImageLink(props.day.icon));
 </script>
 
 <style scoped lang="scss">
