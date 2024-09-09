@@ -1,17 +1,19 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetDropdown />
+    <WeatherWidgetDropdown @handleLocationKeyChange="handleLocationKeyChange" />
     <div class="weather-widget__content">
       <WeatherWidgetMessage
         v-if="statusMessages.length"
         :messages="statusMessages"
       />
-      <template v-else-if="selectedDayData && weatherData && locationKeyData">
+      <template
+        v-else-if="selectedDayData && weatherData && currentLocationData"
+      >
         <WeatherWidgetPlace
           :placeInfo="[
-            locationKeyData.localizedName,
-            locationKeyData.country,
-            selectedDayData.date,
+            currentLocationData.localizedName,
+            currentLocationData.country,
+            selectedDay,
           ]"
         />
         <WeatherWidgetCurrentData v-bind="selectedDayData" />
@@ -27,11 +29,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 
 import {
   type LocationKeyMapperOutput,
   type WeatherDataMapperOutput,
+  type PlaceInfo,
   mapLocationKeyData,
   mapWeatherData,
 } from '@/utils/dataMappers';
@@ -52,6 +55,7 @@ const selectedDay = ref<string>(currentDate);
 const coords = ref<Coordinates | null>(null);
 const isLoadingGeolocation = ref<boolean>(false);
 const geoLocationError = ref<string | null>(null);
+const selectedLocationKey = ref<PlaceInfo | null>(null);
 
 const {
   data: locationKeyData,
@@ -99,12 +103,33 @@ const selectedDayData = computed(() => {
   return currentWeatherData || weatherData.value?.dailyForecasts[0];
 });
 
+const currentLocationData = computed(
+  () => selectedLocationKey.value || locationKeyData.value
+);
+
+watch(
+  () => currentLocationData.value?.key,
+  (locationKey) => {
+    const locationKeyEndpoint = import.meta.env.VITE_MOCK
+      ? ''
+      : `/${locationKey}`;
+
+    fetchWeatherData('GET', {
+      url: `${locationKeyEndpoint}`,
+    });
+  }
+);
+
 const handleDayChange = (newDay: string) => {
   if (newDay === selectedDay.value) {
     selectedDay.value = currentDate;
   } else {
     selectedDay.value = newDay;
   }
+};
+
+const handleLocationKeyChange = (locationKey: PlaceInfo) => {
+  selectedLocationKey.value = locationKey;
 };
 
 onMounted(async () => {
@@ -122,14 +147,6 @@ onMounted(async () => {
 
   await fetchLocationKey('GET', {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
-  });
-
-  const locationKeyEndpoint = import.meta.env.VITE_MOCK
-    ? ''
-    : `/${locationKeyData.value?.key}`;
-
-  await fetchWeatherData('GET', {
-    url: `${locationKeyEndpoint}`,
   });
 });
 </script>

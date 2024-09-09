@@ -15,10 +15,11 @@
       />
       <template v-else-if="autocompleteData">
         <li
-          v-for="{ localizedName, countryName } in autocompleteData"
+          v-for="place in autocompleteData"
           class="dropdown__list-item"
+          @click="() => handlePlaceChange(place)"
         >
-          {{ `${localizedName}, ${countryName}` }}
+          {{ `${place.localizedName}, ${place.country}` }}
         </li>
       </template>
       <p v-else class="dropdown__list-message">No results.</p>
@@ -31,7 +32,11 @@ import { computed, ref } from 'vue';
 
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
-import { mapAutocompleteData } from '@/utils/dataMappers';
+import {
+  type AutocompleteMapperOutput,
+  type PlaceInfo,
+  mapAutocompleteData,
+} from '@/utils/dataMappers';
 import { debounce } from '@/utils/debounce';
 
 import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
@@ -43,7 +48,14 @@ const {
   error: autocompleteError,
   isLoading: isLoadingAutocomplete,
   fetchData: fetchAutocompleteResults,
-} = useFetch(`${API_URL}${ENDPOINTS.autocomplete}`, mapAutocompleteData);
+} = useFetch<AutocompleteMapperOutput>(
+  `${API_URL}${ENDPOINTS.autocomplete}`,
+  mapAutocompleteData
+);
+
+const emit = defineEmits<{
+  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo): void;
+}>();
 
 const shouldDisplayStatusMessages = computed(() => {
   return (
@@ -67,6 +79,11 @@ const handleInputChange = () => {
   debouncedFetchAutocompleteResults('GET', {
     params: { q: searchValue.value },
   });
+};
+
+const handlePlaceChange = (place: PlaceInfo) => {
+  searchValue.value = `${place.localizedName}, ${place.country}`;
+  emit('handleLocationKeyChange', place);
 };
 </script>
 
