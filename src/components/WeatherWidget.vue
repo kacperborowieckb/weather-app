@@ -34,17 +34,16 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue';
 
-import {
-  type LocationKeyMapperOutput,
-  type WeatherDataMapperOutput,
-  type LocationInfo,
-  mapLocationKeyData,
-  mapWeatherData,
-} from '@/utils/dataMappers';
+import { mapLocationKeyData, mapWeatherData } from '@/utils/dataMappers';
 import { type Coordinates, getLocation } from '@/helpers/getLocation';
 import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
+import type {
+  LocationInfo,
+  LocationKeyMapperOutput,
+  WeatherDataMapperOutput,
+} from '@/types';
 
 import WeatherWidgetLocation from './WeatherWidgetLocation.vue';
 import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';

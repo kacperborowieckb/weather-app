@@ -31,7 +31,7 @@ import { computed } from 'vue';
 
 import { getListLabel } from '@/utils/strings';
 import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
-import { type ForecastItem } from '@/utils/dataMappers';
+import type { ForecastItem } from '@/types';
 
 const props = defineProps<ForecastItem>();
 

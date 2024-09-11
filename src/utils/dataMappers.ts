@@ -1,35 +1,13 @@
 import { getFormattedDate } from '@/helpers/getFormattedDate';
-
-export type WeatherDataMapperInput = {
-  DailyForecasts: {
-    Date: string;
-    Temperature: Record<'Minimum' | 'Maximum', { Value: number; Unit: string }>;
-    Day: {
-      Icon: number;
-      IconPhrase: string;
-    };
-    Sources: string[];
-  }[];
-};
-
-export type ForecastItem = {
-  date: string;
-  temperature: {
-    minimum: number;
-    maximum: number;
-    average: number;
-    unit: string;
-  };
-  day: {
-    icon: number;
-    iconPhrase: string;
-  };
-  sources: string[];
-};
-
-export type WeatherDataMapperOutput = {
-  dailyForecasts: ForecastItem[];
-};
+import type {
+  AutocompleteLocationsMapperInput,
+  AutocompleteLocationsMapperOutput,
+  ForecastItem,
+  LocationKeyMapperInput,
+  LocationKeyMapperOutput,
+  WeatherDataMapperInput,
+  WeatherDataMapperOutput,
+} from '@/types';
 
 export const mapWeatherData = (
   data: WeatherDataMapperInput
@@ -58,22 +36,6 @@ export const mapWeatherData = (
   return { dailyForecasts: dailyForecastsMap };
 };
 
-type LocationKeyMapperInput = {
-  Key: string;
-  LocalizedName: string;
-  Country: {
-    LocalizedName: string;
-  };
-};
-
-export type LocationInfo = {
-  key: string;
-  localizedName: string;
-  country: string;
-};
-
-export type LocationKeyMapperOutput = LocationInfo;
-
 export const mapLocationKeyData = (
   data: LocationKeyMapperInput
 ): LocationKeyMapperOutput => ({
@@ -81,16 +43,6 @@ export const mapLocationKeyData = (
   localizedName: data.LocalizedName,
   country: data.Country.LocalizedName,
 });
-
-export type AutocompleteLocationsMapperInput = {
-  Key: string;
-  LocalizedName: string;
-  Country: {
-    LocalizedName: string;
-  };
-}[];
-
-export type AutocompleteLocationsMapperOutput = LocationInfo[];
 
 export const mapAutocompleteLocations = (
   data: AutocompleteLocationsMapperInput

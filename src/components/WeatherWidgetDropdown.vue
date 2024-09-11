@@ -41,12 +41,9 @@ import { computed, ref } from 'vue';
 
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
-import {
-  type AutocompleteLocationsMapperOutput,
-  type LocationInfo,
-  mapAutocompleteLocations,
-} from '@/utils/dataMappers';
+import { mapAutocompleteLocations } from '@/utils/dataMappers';
 import { debounce } from '@/utils/debounce';
+import type { AutocompleteLocationsMapperOutput, LocationInfo } from '@/types';
 
 import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
 

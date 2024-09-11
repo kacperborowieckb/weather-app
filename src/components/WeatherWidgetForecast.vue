@@ -16,11 +16,9 @@
 <script setup lang="ts">
 import { getDayPrefix } from '@/helpers/getDayPrefix';
 import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
-import { type ForecastItem } from '@/utils/dataMappers';
+import type { ForecastData } from '@/types';
 
 import WeatherWidgetForecastCard from './WeatherWidgetForecastCard.vue';
-
-export type ForecastData = ForecastItem[];
 
 defineProps<{
   forecastData: ForecastData;
