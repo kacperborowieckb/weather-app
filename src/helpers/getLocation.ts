@@ -1,7 +1,4 @@
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
+import { Coordinates } from '@/types';
 
 export const getLocation = async (): Promise<Coordinates> => {
   return new Promise((resolve, reject) => {
