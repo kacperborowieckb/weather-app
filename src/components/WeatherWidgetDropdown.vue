@@ -2,11 +2,11 @@
   <div class="weather-widget-dropdown">
     <div class="weather-widget-dropdown__input-wrapper">
       <input
+        v-model="searchValue"
         type="text"
         class="weather-widget-dropdown__input"
-        placeholder="Search a place"
-        aria-label="Search a place for weather forecast"
-        v-model="searchValue"
+        placeholder="Search a location"
+        aria-label="Search a location for weather forecast"
         @input="handleInputChange"
       />
       <ul class="weather-widget-dropdown__list">
@@ -14,22 +14,22 @@
           v-if="statusMessages.length"
           :messages="statusMessages"
         />
-        <template v-else-if="autocompleteData">
+        <template v-else-if="autocompleteLocations">
           <li
-            v-for="place in autocompleteData"
-            :key="place.key"
+            v-for="location in autocompleteLocations"
+            :key="location.key"
             class="weather-widget-dropdown__list-item"
-            @click="handlePlaceChange(place)"
+            @click="handleLocationChange(location)"
           >
-            {{ `${place.localizedName}, ${place.country}` }}
+            {{ `${location.localizedName}, ${location.country}` }}
           </li>
         </template>
       </ul>
     </div>
     <button
+      v-if="selectedLocation"
       class="weather-widget-dropdown__reset-btn"
-      v-if="selectedLocationKey"
-      @click="handlePlaceChange(null)"
+      @click="handleLocationChange(null)"
     >
       Reset
     </button>
@@ -43,8 +43,8 @@ import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
 import {
   type AutocompleteMapperOutput,
-  type PlaceInfo,
-  mapAutocompleteData,
+  type LocationInfo,
+  mapAutocompleteLocations,
 } from '@/utils/dataMappers';
 import { debounce } from '@/utils/debounce';
 
@@ -52,34 +52,29 @@ import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
 
 const searchValue = ref('');
 
-defineProps<{ selectedLocationKey: PlaceInfo | null }>();
+defineProps<{ selectedLocation: LocationInfo | null }>();
 
 const emit = defineEmits<{
-  (e: 'handleLocationKeyChange', autocompleteData: PlaceInfo | null): void;
+  (e: 'locationChange', autocompleteLocations: LocationInfo | null): void;
 }>();
 
 const {
-  data: autocompleteData,
+  data: autocompleteLocations,
   error: autocompleteError,
   isLoading: isLoadingAutocomplete,
   fetchData: fetchAutocompleteResults,
 } = useFetch<AutocompleteMapperOutput>(
   `${API_URL}${ENDPOINTS.autocomplete}`,
-  mapAutocompleteData
+  mapAutocompleteLocations
 );
 
 const loadingMessage = computed(() =>
   isLoadingAutocomplete.value ? 'Loading...' : ''
 );
 
-const noResultsMessage = computed(() => {
-  if (
-    !loadingMessage.value &&
-    (!autocompleteData.value || autocompleteData.value.length === 0)
-  ) {
-    return 'No results.';
-  }
-});
+const noResultsMessage = computed(() =>
+  !autocompleteLocations.value?.length ? 'No results.' : ''
+);
 
 const statusMessages = computed(() => {
   return [
@@ -95,13 +90,15 @@ const handleInputChange = () => {
   if (!searchValue.value) return;
 
   debouncedFetchAutocompleteResults('GET', {
-    params: { q: searchValue.value },
+    params: { q: searchValue.value.toLowerCase() },
   });
 };
 
-const handlePlaceChange = (place: PlaceInfo | null) => {
-  searchValue.value = place ? `${place.localizedName}, ${place.country}` : '';
-  emit('handleLocationKeyChange', place);
+const handleLocationChange = (location: LocationInfo | null) => {
+  searchValue.value = location
+    ? `${location.localizedName}, ${location.country}`
+    : '';
+  emit('locationChange', location);
 };
 </script>
 

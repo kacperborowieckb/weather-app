@@ -66,13 +66,13 @@ type LocationKeyMapperInput = {
   };
 };
 
-export type PlaceInfo = {
+export type LocationInfo = {
   key: string;
   localizedName: string;
   country: string;
 };
 
-export type LocationKeyMapperOutput = PlaceInfo;
+export type LocationKeyMapperOutput = LocationInfo;
 
 export const mapLocationKeyData = (
   data: LocationKeyMapperInput
@@ -90,9 +90,9 @@ export type AutocompleteMapperInput = {
   };
 }[];
 
-export type AutocompleteMapperOutput = PlaceInfo[];
+export type AutocompleteMapperOutput = LocationInfo[];
 
-export const mapAutocompleteData = (
+export const mapAutocompleteLocations = (
   data: AutocompleteMapperInput
 ): AutocompleteMapperOutput => {
   return data.map((city) => ({

@@ -1,8 +1,8 @@
 <template>
   <div class="weather-widget">
     <WeatherWidgetDropdown
-      :selectedLocationKey
-      @handleLocationKeyChange="handleLocationKeyChange"
+      :selectedLocation
+      @locationChange="handleLocationChange"
     />
     <div class="weather-widget__content">
       <WeatherWidgetMessage
@@ -12,8 +12,8 @@
       <template
         v-else-if="selectedDayData && weatherData && currentLocationData"
       >
-        <WeatherWidgetPlace
-          :placeInfo="[
+        <WeatherWidgetLocation
+          :locationInfo="[
             currentLocationData.localizedName,
             currentLocationData.country,
             selectedDayData.date,
@@ -37,7 +37,7 @@ import { computed, ref, onMounted, watch } from 'vue';
 import {
   type LocationKeyMapperOutput,
   type WeatherDataMapperOutput,
-  type PlaceInfo,
+  type LocationInfo,
   mapLocationKeyData,
   mapWeatherData,
 } from '@/utils/dataMappers';
@@ -46,7 +46,7 @@ import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
 
-import WeatherWidgetPlace from './WeatherWidgetPlace.vue';
+import WeatherWidgetLocation from './WeatherWidgetLocation.vue';
 import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';
 import WeatherWidgetForecast from './WeatherWidgetForecast.vue';
 import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
@@ -58,10 +58,10 @@ const selectedDay = ref<string>(currentDate);
 const coords = ref<Coordinates | null>(null);
 const isLoadingGeolocation = ref<boolean>(false);
 const geoLocationError = ref<string | null>(null);
-const selectedLocationKey = ref<PlaceInfo | null>(null);
+const selectedLocation = ref<LocationInfo | null>(null);
 
 const {
-  data: locationKeyData,
+  data: location,
   error: locationKeyError,
   isLoading: isLoadingLocationKey,
   fetchData: fetchLocationKey,
@@ -107,7 +107,7 @@ const selectedDayData = computed(() => {
 });
 
 const currentLocationData = computed(
-  () => selectedLocationKey.value || locationKeyData.value
+  () => selectedLocation.value || location.value
 );
 
 watch(currentLocationData, () => {
@@ -128,8 +128,8 @@ const handleDayChange = (newDay: string) => {
   }
 };
 
-const handleLocationKeyChange = (locationKey: PlaceInfo | null) => {
-  selectedLocationKey.value = locationKey;
+const handleLocationChange = (locationKey: LocationInfo | null) => {
+  selectedLocation.value = locationKey;
 };
 
 onMounted(async () => {
