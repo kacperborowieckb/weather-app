@@ -3,8 +3,8 @@ import type {
   AutocompleteLocationsMapperInput,
   AutocompleteLocationsMapperOutput,
   ForecastItem,
-  LocationKeyMapperInput,
-  LocationKeyMapperOutput,
+  LocationMapperInput,
+  LocationMapperOutput,
   WeatherDataMapperInput,
   WeatherDataMapperOutput,
 } from '@/types';
@@ -36,9 +36,9 @@ export const mapWeatherData = (
   return { dailyForecasts: dailyForecastsMap };
 };
 
-export const mapLocationKeyData = (
-  data: LocationKeyMapperInput
-): LocationKeyMapperOutput => ({
+export const mapLocationData = (
+  data: LocationMapperInput
+): LocationMapperOutput => ({
   key: data.Key,
   localizedName: data.LocalizedName,
   country: data.Country.LocalizedName,

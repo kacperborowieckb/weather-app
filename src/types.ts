@@ -36,7 +36,7 @@ export type WeatherDataMapperOutput = {
   dailyForecasts: ForecastItem[];
 };
 
-export type LocationKeyMapperInput = {
+export type LocationMapperInput = {
   Key: string;
   LocalizedName: string;
   Country: {
@@ -50,7 +50,7 @@ export type LocationInfo = {
   country: string;
 };
 
-export type LocationKeyMapperOutput = LocationInfo;
+export type LocationMapperOutput = LocationInfo;
 
 export type AutocompleteLocationsMapperInput = {
   Key: string;

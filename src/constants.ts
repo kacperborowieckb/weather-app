@@ -3,13 +3,13 @@ export const API_URL = import.meta.env.VITE_MOCK
   : 'http://dataservice.accuweather.com';
 
 const mockEndpoints = {
-  locationKey: '/locationKey',
+  location: '/location',
   forecast: '/forecast',
   autocomplete: '/autocomplete',
 } as const;
 
 const prodEndpoints = {
-  locationKey: '/locations/v1/cities/geoposition/search',
+  location: '/locations/v1/cities/geoposition/search',
   forecast: '/forecasts/v1/daily/5day',
   autocomplete: '/locations/v1/cities/autocomplete',
 } as const;

@@ -34,14 +34,14 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue';
 
-import { mapLocationKeyData, mapWeatherData } from '@/utils/dataMappers';
+import { mapLocationData, mapWeatherData } from '@/utils/dataMappers';
 import { type Coordinates, getLocation } from '@/helpers/getLocation';
 import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
 import type {
   LocationInfo,
-  LocationKeyMapperOutput,
+  LocationMapperOutput,
   WeatherDataMapperOutput,
 } from '@/types';
 
@@ -60,13 +60,13 @@ const geoLocationError = ref<string | null>(null);
 const selectedLocation = ref<LocationInfo | null>(null);
 
 const {
-  data: location,
-  error: locationKeyError,
-  isLoading: isLoadingLocationKey,
-  fetchData: fetchLocationKey,
-} = useFetch<LocationKeyMapperOutput>(
-  `${API_URL}${ENDPOINTS.locationKey}`,
-  mapLocationKeyData
+  data: locationData,
+  error: locationError,
+  isLoading: isLoadingLocation,
+  fetchData: fetchLocation,
+} = useFetch<LocationMapperOutput>(
+  `${API_URL}${ENDPOINTS.location}`,
+  mapLocationData
 );
 
 const {
@@ -80,13 +80,13 @@ const {
 );
 
 const isLoading = computed(() =>
-  [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
+  [isLoadingLocation, isLoadingWeatherData, isLoadingGeolocation].some(
     (loading) => loading.value
   )
 );
 
 const globalErrors = computed(() => {
-  return [geoLocationError, locationKeyError, weatherError]
+  return [geoLocationError, locationError, weatherError]
     .map((err) => err.value)
     .filter(Boolean) as (string | Error)[];
 });
@@ -106,16 +106,16 @@ const selectedDayData = computed(() => {
 });
 
 const currentLocationData = computed(
-  () => selectedLocation.value || location.value
+  () => selectedLocation.value || locationData.value
 );
 
 watch(currentLocationData, () => {
-  const locationKeyEndpoint = import.meta.env.VITE_MOCK
+  const locationEndpoint = import.meta.env.VITE_MOCK
     ? ''
     : `/${currentLocationData.value?.key}`;
 
   fetchWeatherData('GET', {
-    url: `${locationKeyEndpoint}`,
+    url: `${locationEndpoint}`,
   });
 });
 
@@ -127,8 +127,8 @@ const handleDayChange = (newDay: string) => {
   }
 };
 
-const handleLocationChange = (locationKey: LocationInfo | null) => {
-  selectedLocation.value = locationKey;
+const handleLocationChange = (location: LocationInfo | null) => {
+  selectedLocation.value = location;
 };
 
 onMounted(async () => {
@@ -144,7 +144,7 @@ onMounted(async () => {
 
   if (geoLocationError.value) return;
 
-  fetchLocationKey('GET', {
+  fetchLocation('GET', {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
   });
 });

@@ -69,9 +69,11 @@ const loadingMessage = computed(() =>
   isLoadingAutocomplete.value ? 'Loading...' : ''
 );
 
-const noResultsMessage = computed(() =>
-  !autocompleteLocations.value?.length ? 'No results.' : ''
-);
+const noResultsMessage = computed(() => {
+  if (!loadingMessage.value && !autocompleteLocations.value?.length) {
+    return 'No results.';
+  }
+});
 
 const statusMessages = computed(() => {
   return [
