@@ -156,10 +156,6 @@ $border-dropdown-list: solid 2px transparent;
     }
   }
 
-  &__reset-btn {
-    overflow: hidden;
-  }
-
   &__input-wrapper:active &__input,
   &__input:focus {
     & ~ ul {
