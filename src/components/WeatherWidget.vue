@@ -35,11 +35,12 @@
 import { computed, ref, onMounted, watch } from 'vue';
 
 import { mapLocationData, mapWeatherData } from '@/utils/dataMappers';
-import { type Coordinates, getLocation } from '@/helpers/getLocation';
+import { getLocation } from '@/helpers/getLocation';
 import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
 import type {
+  Coordinates,
   LocationInfo,
   LocationMapperOutput,
   WeatherDataMapperOutput,

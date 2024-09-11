@@ -1,5 +1,5 @@
 <template>
-  <h2 class="location">
+  <h2 class="location-info">
     {{ locationInfo.join(', ') }}
   </h2>
 </template>
@@ -9,7 +9,7 @@ defineProps<{ locationInfo: string[] }>();
 </script>
 
 <style scoped lang="scss">
-.location {
+.location-info {
   text-align: center;
 }
 </style>
