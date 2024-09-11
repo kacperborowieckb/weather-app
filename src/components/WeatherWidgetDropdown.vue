@@ -42,7 +42,7 @@ import { computed, ref } from 'vue';
 import { useFetch } from '@/composables/useFetch';
 import { API_URL, ENDPOINTS } from '@/constants';
 import {
-  type AutocompleteMapperOutput,
+  type AutocompleteLocationsMapperOutput,
   type LocationInfo,
   mapAutocompleteLocations,
 } from '@/utils/dataMappers';
@@ -63,7 +63,7 @@ const {
   error: autocompleteError,
   isLoading: isLoadingAutocomplete,
   fetchData: fetchAutocompleteResults,
-} = useFetch<AutocompleteMapperOutput>(
+} = useFetch<AutocompleteLocationsMapperOutput>(
   `${API_URL}${ENDPOINTS.autocomplete}`,
   mapAutocompleteLocations
 );
@@ -98,15 +98,17 @@ const handleLocationChange = (location: LocationInfo | null) => {
   searchValue.value = location
     ? `${location.localizedName}, ${location.country}`
     : '';
+
   emit('locationChange', location);
 };
 </script>
 
 <style scoped lang="scss">
-.weather-widget-dropdown {
-  $dropdown-max-height: 240px;
-  $input-width: 160px;
+$dropdown-max-height: 240px;
+$input-width: 160px;
+$border-dropdown-list: solid 2px transparent;
 
+.weather-widget-dropdown {
   display: flex;
   gap: $space-xs;
   margin-left: auto;
@@ -119,8 +121,8 @@ const handleLocationChange = (location: LocationInfo | null) => {
   &__input,
   &__reset-btn {
     border: $border-primary;
-    outline: none;
     border-radius: $radius-sm;
+    outline: none;
     padding: $p-xs;
     background-color: $clr-primary-dark;
     cursor: pointer;
@@ -179,25 +181,24 @@ const handleLocationChange = (location: LocationInfo | null) => {
     max-height: 0;
     overflow-y: scroll;
     list-style: none;
-    border: $border-primary;
+    border: $border-dropdown-list;
     border-top: none;
-    border-color: transparent;
     border-radius: 0 0 $radius-sm $radius-sm;
     background-color: $clr-primary-dark;
     transition: all $transition-duration ease-in-out;
-  }
 
-  &__list-item {
-    overflow: hidden;
-    padding: $p-xs;
-    opacity: 0;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    transition: all $transition-duration ease-out;
+    &-item {
+      overflow: hidden;
+      padding: $p-xs;
+      opacity: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: all $transition-duration ease-out;
 
-    &:hover {
-      background-color: $clr-primary-light;
-      cursor: pointer;
+      &:hover {
+        background-color: $clr-primary-light;
+        cursor: pointer;
+      }
     }
   }
 }
