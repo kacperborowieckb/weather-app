@@ -73,6 +73,8 @@ const noResultsMessage = computed(() => {
   if (!loadingMessage.value && !autocompleteLocations.value?.length) {
     return 'No results.';
   }
+
+  return ''
 });
 
 const statusMessages = computed(() => {
