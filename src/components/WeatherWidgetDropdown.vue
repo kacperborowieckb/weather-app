@@ -105,7 +105,6 @@ const handleLocationChange = (location: LocationInfo | null) => {
 <style scoped lang="scss">
 $dropdown-max-height: 240px;
 $input-width: 160px;
-$border-dropdown-list: solid 2px transparent;
 
 .weather-widget-dropdown {
   display: flex;
@@ -176,7 +175,7 @@ $border-dropdown-list: solid 2px transparent;
     max-height: 0;
     overflow-y: scroll;
     list-style: none;
-    border: $border-dropdown-list;
+    border: 2px solid transparent;
     border-top: none;
     border-radius: 0 0 $radius-sm $radius-sm;
     background-color: $clr-primary-dark;
