@@ -18,9 +18,9 @@ defineProps<{ messages?: (string | Error)[] }>();
   display: flex;
   flex-direction: column;
   gap: $space-sm;
+  padding: $p-xs;
   justify-content: center;
   align-items: center;
-  aspect-ratio: 2.5/1;
   text-align: center;
 }
 </style>

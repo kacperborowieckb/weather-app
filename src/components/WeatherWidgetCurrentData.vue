@@ -17,8 +17,8 @@
     </div>
     <ul class="weather-info__additional-info">
       <li
-        class="weather-info__additional-info-item"
         v-for="(listItem, key) in sideListData"
+        class="weather-info__additional-info-item"
       >
         {{ getListLabel(key) }}: {{ listItem }}
       </li>
@@ -31,7 +31,7 @@ import { computed } from 'vue';
 
 import { getListLabel } from '@/utils/strings';
 import { getWeatherImageLink } from '@/helpers/getWeatherImageLink';
-import { type ForecastItem } from '@/utils/dataMappers';
+import type { ForecastItem } from '@/types';
 
 const props = defineProps<ForecastItem>();
 

@@ -1,46 +1,56 @@
 <template>
   <div class="weather-widget">
-    <WeatherWidgetMessage
-      v-if="statusMessages.length"
-      :messages="statusMessages"
+    <WeatherWidgetDropdown
+      :selectedLocation
+      @locationChange="handleLocationChange"
     />
-    <template v-else-if="selectedDayData && weatherData && locationKeyData">
-      <WeatherWidgetPlace
-        :placeInfo="[
-          locationKeyData.localizedName,
-          locationKeyData.country,
-          selectedDayData.date,
-        ]"
+    <div class="weather-widget__content">
+      <WeatherWidgetMessage
+        v-if="statusMessages.length"
+        :messages="statusMessages"
       />
-      <WeatherWidgetCurrentData v-bind="selectedDayData" />
-      <WeatherWidgetForecast
-        :forecastData="weatherData.dailyForecasts"
-        :selectedDay
-        @handleDayChange="handleDayChange"
-      />
-    </template>
-    <p v-else>Something bad happened. Please refresh the page</p>
+      <template
+        v-else-if="selectedDayData && weatherData && currentLocationData"
+      >
+        <WeatherWidgetLocation
+          :locationInfo="[
+            currentLocationData.localizedName,
+            currentLocationData.country,
+            selectedDayData.date,
+          ]"
+        />
+        <WeatherWidgetCurrentData v-bind="selectedDayData" />
+        <WeatherWidgetForecast
+          :forecastData="weatherData.dailyForecasts"
+          :selectedDay
+          @handleDayChange="handleDayChange"
+        />
+      </template>
+      <p v-else>Something bad happened. Please refresh the page</p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 
-import {
-  type LocationKeyMapperOutput,
-  type WeatherDataMapperOutput,
-  mapLocationKeyData,
-  mapWeatherData,
-} from '@/utils/dataMappers';
-import { type Coordinates, getLocation } from '@/helpers/getLocation';
+import { mapLocationData, mapWeatherData } from '@/utils/dataMappers';
+import { getLocation } from '@/helpers/getLocation';
 import { getFormattedDate } from '@/helpers/getFormattedDate';
 import { useFetch } from '@/composables/useFetch';
-import { API_URL, endpoints } from '@/constants';
+import { API_URL, ENDPOINTS } from '@/constants';
+import type {
+  Coordinates,
+  LocationInfo,
+  LocationMapperOutput,
+  WeatherDataMapperOutput,
+} from '@/types';
 
-import WeatherWidgetPlace from './WeatherWidgetPlace.vue';
+import WeatherWidgetLocation from './WeatherWidgetLocation.vue';
 import WeatherWidgetCurrentData from './WeatherWidgetCurrentData.vue';
 import WeatherWidgetForecast from './WeatherWidgetForecast.vue';
 import WeatherWidgetMessage from './WeatherWidgetMessage.vue';
+import WeatherWidgetDropdown from './WeatherWidgetDropdown.vue';
 
 const currentDate = getFormattedDate();
 
@@ -48,15 +58,16 @@ const selectedDay = ref<string>(currentDate);
 const coords = ref<Coordinates | null>(null);
 const isLoadingGeolocation = ref<boolean>(false);
 const geoLocationError = ref<string | null>(null);
+const selectedLocation = ref<LocationInfo | null>(null);
 
 const {
-  data: locationKeyData,
-  error: locationKeyError,
-  isLoading: isLoadingLocationKey,
-  fetchData: fetchLocationKey,
-} = useFetch<LocationKeyMapperOutput>(
-  `${API_URL}${endpoints.locationKey}`,
-  mapLocationKeyData
+  data: locationData,
+  error: locationError,
+  isLoading: isLoadingLocation,
+  fetchData: fetchLocation,
+} = useFetch<LocationMapperOutput>(
+  `${API_URL}${ENDPOINTS.location}`,
+  mapLocationData
 );
 
 const {
@@ -65,18 +76,18 @@ const {
   isLoading: isLoadingWeatherData,
   fetchData: fetchWeatherData,
 } = useFetch<WeatherDataMapperOutput>(
-  `${API_URL}${endpoints.forecast}`,
+  `${API_URL}${ENDPOINTS.forecast}`,
   mapWeatherData
 );
 
 const isLoading = computed(() =>
-  [isLoadingLocationKey, isLoadingWeatherData, isLoadingGeolocation].some(
+  [isLoadingLocation, isLoadingWeatherData, isLoadingGeolocation].some(
     (loading) => loading.value
   )
 );
 
 const globalErrors = computed(() => {
-  return [geoLocationError, locationKeyError, weatherError]
+  return [geoLocationError, locationError, weatherError]
     .map((err) => err.value)
     .filter(Boolean) as (string | Error)[];
 });
@@ -95,12 +106,30 @@ const selectedDayData = computed(() => {
   return currentWeatherData || weatherData.value?.dailyForecasts[0];
 });
 
+const currentLocationData = computed(
+  () => selectedLocation.value || locationData.value
+);
+
+watch(currentLocationData, () => {
+  const locationEndpoint = import.meta.env.VITE_MOCK
+    ? ''
+    : `/${currentLocationData.value?.key}`;
+
+  fetchWeatherData('GET', {
+    url: `${locationEndpoint}`,
+  });
+});
+
 const handleDayChange = (newDay: string) => {
   if (newDay === selectedDay.value) {
     selectedDay.value = currentDate;
   } else {
     selectedDay.value = newDay;
   }
+};
+
+const handleLocationChange = (location: LocationInfo | null) => {
+  selectedLocation.value = location;
 };
 
 onMounted(async () => {
@@ -116,16 +145,8 @@ onMounted(async () => {
 
   if (geoLocationError.value) return;
 
-  await fetchLocationKey('GET', {
+  fetchLocation('GET', {
     params: { q: `${coords.value?.latitude},${coords.value?.longitude}` },
-  });
-
-  const locationKeyEndpoint = import.meta.env.VITE_MOCK
-    ? ''
-    : `/${locationKeyData.value?.key}`;
-
-  await fetchWeatherData('GET', {
-    url: `${locationKeyEndpoint}`,
   });
 });
 </script>
@@ -135,10 +156,16 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: $space-xl;
-  border: $border-primary;
-  border-radius: $radius-md;
-  padding: $p-lg;
-  min-width: 768px;
-  background-color: $clr-primary-dark;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    border: $border-primary;
+    border-radius: $radius-md;
+    padding: $p-lg;
+    min-width: 768px;
+    background-color: $clr-primary-dark;
+  }
 }
 </style>
